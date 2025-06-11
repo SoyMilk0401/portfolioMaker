@@ -12,10 +12,10 @@ export interface UserInfo {
 }
 
 export interface TechStack {
-    language?: string[]
-    frontend?: string[]
-    backend?: string[]
-    devops?: string[]
+    language: string[]
+    frontend: string[]
+    backend: string[]
+    devops: string[]
 }
 
 export interface RelatedLink {
@@ -38,7 +38,7 @@ export interface PortfolioData {
     password: string
     description: Description
     userInfo: UserInfo
-    techStack: TechStack
-    relatedLinks: RelatedLink[]
-    projects: Project[]
+    techStack?: TechStack
+    relatedLinks?: RelatedLink[]
+    projects?: Project[]
 }

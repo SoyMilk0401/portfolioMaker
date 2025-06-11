@@ -5,7 +5,7 @@ const Header = () => {
     <div className="w-full h-16 flex items-center justify-between px-6 shadow-md bg-white mb-1">
       {/* 로고 */}
       <Link to="/" className="text-xl font-bold">
-        MyPortfolio
+        PortfolioMaker
       </Link>
 
       {/* 네비게이션 링크 */}
