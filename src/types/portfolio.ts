@@ -9,6 +9,8 @@ export interface UserInfo {
     email?: string
     phone?: string
     education?: string
+    githubUsername?: string
+    photo?: string
 }
 
 export interface TechStack {
@@ -35,7 +37,6 @@ export interface Project {
 
 export interface PortfolioData {
     id: string
-    password: string
     description: Description
     userInfo: UserInfo
     techStack?: TechStack

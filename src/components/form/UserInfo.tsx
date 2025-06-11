@@ -57,6 +57,10 @@ export default function UserInfo({ register, errors }: Props) {
             <Label htmlFor="education">학력</Label>
             <Input id="education" {...register("userInfo.education")} />
           </div>
+          <div className="grid gap-2">
+            <Label htmlFor="githubUsername">GitHub 사용자명</Label>
+            <Input id="githubUsername" {...register("userInfo.githubUsername")} />
+          </div>
           <Button variant="default" type="submit">저장하기</Button>
         </div>
       </CardContent>

@@ -1,20 +1,16 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import type { PortfolioData } from "@/types/portfolio";
 import { usePortfolioStore } from "@/stores/useportfolioStore";
-import Description from "@/components/form/Description";
+
 import UserInfo from "@/components/form/UserInfo";
+import { useEffect } from "react";
 
 export default function PortfolioEdit() {
   const { id } = useParams();
+  console.log("PortfolioEdit id:", id);
+
   if (!id?.trim()) {
       return (
         <div className="p-6 max-w-xl mx-auto space-y-4">
@@ -28,6 +24,7 @@ export default function PortfolioEdit() {
       );
     }
 
+  const addPortfolio = usePortfolioStore((store) => store.addPortfolio);
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
   const updatePortfolio = usePortfolioStore((store) => store.updatePortfolio);
   
@@ -35,8 +32,7 @@ export default function PortfolioEdit() {
 
   const form = useForm<PortfolioData>({
     defaultValues: {
-      id: portfolio?.id || "",
-      password: portfolio?.password || "",
+      id: id,
       description: {
         title: portfolio?.description?.title || "",
         detail: portfolio?.description?.detail || "",
@@ -47,6 +43,8 @@ export default function PortfolioEdit() {
         email: portfolio?.userInfo.email || "",
         phone: portfolio?.userInfo.phone || "",
         education: portfolio?.userInfo.education || "",
+        photo: portfolio?.userInfo.photo || "",
+        githubUsername: portfolio?.userInfo.githubUsername || "",
       },
       techStack: {
         language: portfolio?.techStack?.language || [],
@@ -59,31 +57,66 @@ export default function PortfolioEdit() {
     },
   });
 
-  const { register, handleSubmit, formState } = form;
+  const { register, handleSubmit, formState, reset } = form;
   const { errors } = formState;
 
+  useEffect(() => {
+    reset({
+      id: id,
+      description: {
+        title: portfolio?.description?.title || "",
+        detail: portfolio?.description?.detail || "",
+      },
+      userInfo: {
+        name: portfolio?.userInfo.name || "",
+        birthdate: portfolio?.userInfo.birthdate || "",
+        email: portfolio?.userInfo.email || "",
+        phone: portfolio?.userInfo.phone || "",
+        education: portfolio?.userInfo.education || "",
+        photo: portfolio?.userInfo.photo || "",
+        githubUsername: portfolio?.userInfo.githubUsername || "",
+      },
+      techStack: {
+        language: portfolio?.techStack?.language || [],
+        frontend: portfolio?.techStack?.frontend || [],
+        backend: portfolio?.techStack?.backend || [],
+        devops: portfolio?.techStack?.devops || [],
+      },
+      relatedLinks: portfolio?.relatedLinks || [],
+      projects: portfolio?.projects || [],
+    });
+  }, [id, portfolio, reset]);
+  
+  async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
+    if (!username) return undefined;
+    const res = await fetch(`https://api.github.com/users/${username}`);
+    if (!res.ok) return undefined;
+    const data = await res.json();
+    return data.avatar_url;
+  }
+
   const onSubmit = (data: PortfolioData) => {
-    updatePortfolio(id, data);
+    fetchGithubAvatar(data.userInfo.githubUsername).then((avatarUrl) => {
+      if (avatarUrl) {
+        data.userInfo.photo = avatarUrl;
+      }
+
+      if (portfolio === undefined) {
+        addPortfolio(data);
+      } else {
+        updatePortfolio(id, data);
+      }
+    });
   };
+
 
   return (
     <div className="p-6 max-w-xl mx-auto space-y-4">
-      <Carousel>
-        <CarouselContent>
-          <CarouselItem>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Description register={register} errors={errors} />
-            </form>
-          </CarouselItem>
-          <CarouselItem>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <UserInfo register={register} errors={errors} />
-            </form>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <UserInfo register={register} errors={errors} />
+      </form>
+
     </div>
   );
 }

@@ -11,6 +11,7 @@ function App() {
     <BrowserRouter>
       <Header/>
       <Routes>
+        <Route path='*' element={<HomePage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/view" element={<PortfolioView />} />
         <Route path="/view/:id" element={<PortfolioView />} />
