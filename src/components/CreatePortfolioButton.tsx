@@ -9,7 +9,7 @@ export default function CreatePortfolioButton() {
     navigate(`/edit/${newId}`);
   };
   return (
-    <Card className="hover:shadow-lg transition-shadow border-2 border-dashed border-gray-300 cursor-pointer">
+    <Card className="hover:shadow-lg transition-shadow border-2 border-dashed border-gray-300 cursor-pointer h-[180px]">
       <CardContent className="flex flex-col items-center justify-center py-8">
         <button
           onClick={handleCreate}

@@ -27,12 +27,12 @@ export default function UserInfo({ register, errors }: Props) {
           <div className="grid gap-2">
             <Label htmlFor="name">이름</Label>
             <Input id="name" {...register("userInfo.name", { required: '이름은 필수입니다.' })} />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+            {errors.userInfo?.name && <p className="text-red-500 text-sm">{errors.userInfo.name.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="birthdate">생년월일</Label>
             <Input id="birthdate" type="date" {...register("userInfo.birthdate", { required: '생년월일은 필수입니다.' })} />
-            {errors.birthdate && <p className="text-red-500 text-sm">{errors.birthdate.message}</p>}
+            {errors.userInfo?.birthdate && <p className="text-red-500 text-sm">{errors.userInfo.birthdate.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">이메일</Label>
@@ -47,7 +47,7 @@ export default function UserInfo({ register, errors }: Props) {
                 },
               })}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.userInfo?.email && <p className="text-red-500 text-sm">{errors.userInfo.email.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="phone">연락처</Label>

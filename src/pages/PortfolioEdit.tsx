@@ -111,12 +111,10 @@ export default function PortfolioEdit() {
 
 
   return (
-    <div className="p-6 max-w-xl mx-auto space-y-4">
-
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
         <UserInfo register={register} errors={errors} />
       </form>
-
     </div>
   );
 }
