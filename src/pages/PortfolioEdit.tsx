@@ -1,11 +1,12 @@
+import { useEffect } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Button } from "@/components/ui/button";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
+
 import type { PortfolioData } from "@/types/portfolio";
 import { usePortfolioStore } from "@/stores/useportfolioStore";
-
 import UserInfo from "@/components/form/UserInfo";
-import { useEffect } from "react";
 
 export default function PortfolioEdit() {
   const { id } = useParams();
@@ -114,6 +115,7 @@ export default function PortfolioEdit() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
         <UserInfo register={register} errors={errors} />
+        <Button variant="default" type="submit">저장하기</Button>
       </form>
     </div>
   );

@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
 type Props = {
   register: any;
@@ -61,11 +60,10 @@ export default function UserInfo({ register, errors }: Props) {
             <Label htmlFor="githubUsername">GitHub 사용자명</Label>
             <Input id="githubUsername" {...register("userInfo.githubUsername")} />
           </div>
-          <Button variant="default" type="submit">저장하기</Button>
         </div>
       </CardContent>
       <CardFooter>
-        <p className="text-sm text-gray-500">* 모든 필드는 나중에 수정할 수 있습니다.</p>
+        <p className="text-sm text-gray-500">* GitHub 사용자명을 통해 프로필 사진을 추가합니다.</p>
       </CardFooter>
     </Card>
   );

@@ -8,7 +8,7 @@ function Home() {
         PortfolioMaker
       </h1>
       <p className="text-base sm:text-lg md:text-xl text-gray-600 text-center">
-        나만의 포트폴리오를 손쉽게 만들고 공유하세요.
+        나만의 포트폴리오를 손쉽게 만들어보세요.
         직관적인 UI로 누구나 멋진 소개 페이지를 제작할 수 있습니다.
       </p>
       <PortfolioList />

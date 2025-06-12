@@ -1,5 +1,5 @@
 import { usePortfolioStore } from "@/stores/useportfolioStore"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Link } from "react-router"
 import CreatePortfolioButton from "./CreatePortfolioButton"
 import TechStackBadge from "./TechStackBadge"
