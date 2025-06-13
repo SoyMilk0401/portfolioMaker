@@ -37,6 +37,7 @@ export interface Project {
 
 export interface PortfolioData {
     id: string
+    password: string
     description: Description
     userInfo: UserInfo
     techStack?: TechStack

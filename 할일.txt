@@ -1,0 +1,23 @@
+- 6/25 발표(발표할때 기술적 로직을 주로 발표?)
+- 배포된 url 주소, 노드모듈 빠진 소스 24일까지
+- 완성, 배포(서버 구축후 url로 접속)
+
+추가로 할거
+
+기본값 로컬스토리지에 넣어서 보여줌
+폼 useEffect로 값 불러옴
+
+반복적 동작 모듈화
+타이틀 변경 js 등
+
+오픈그래프
+    <meta property="og:title" content="감정 일기장" />
+    <meta property="og:description" content="나만의 작은 감정 일기장" />
+    <meta property="og:image" content="/thumbnail.png" />
+메타데이터 추가
+
+
+호스팅(배포)
+.war파일로 압축 (npm run build)
+vercel
+vercel --prod(수정할때)

@@ -105,7 +105,7 @@ export default function PortfolioEdit() {
       if (portfolio === undefined) {
         addPortfolio(data);
       } else {
-        updatePortfolio(id, data);
+        updatePortfolio(data);
       }
     });
   };
