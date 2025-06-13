@@ -7,8 +7,8 @@ const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 interface PortfolioState {
   portfolios: PortfolioData[];
-  loadAll: () => Promise<void>;
-  saveAll: () => Promise<void>;
+  loadAllPortfolios: () => Promise<void>;
+  saveAllPortfolios: () => Promise<void>;
   getPortfolio: (id : string) => PortfolioData | undefined;
   addPortfolio: (data: PortfolioData) => Promise<void>;
   updatePortfolio: (data: PortfolioData) => Promise<void>;
@@ -18,15 +18,16 @@ interface PortfolioState {
 export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   portfolios: [],
 
-  loadAll: async () => {
+  loadAllPortfolios: async () => {
     const res = await fetch(`${BIN_URL}`, {
+      method: 'GET',
       headers: { "X-Master-Key": API_KEY }
     });
     const { record } = await res.json();
     set({ portfolios: record.portfolios || [] });
   },
 
-  saveAll: async () => {
+  saveAllPortfolios: async () => {
     const portfolios = get().portfolios;
     await fetch(BIN_URL, {
       method: "PUT",
@@ -44,7 +45,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
 
   addPortfolio: async (data) => {
     set((state) => ({ portfolios: [...state.portfolios, data] }));
-    await get().saveAll();
+    await get().saveAllPortfolios();
   },
 
   updatePortfolio: async (data) => {
@@ -53,13 +54,13 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
         p.id === data.id ? data : p
       )
     }));
-    await get().saveAll();
+    await get().saveAllPortfolios();
   },
 
   removePortfolio: async (id) => {
     set((state) => ({
       portfolios: state.portfolios.filter((p) => p.id !== id)
     }));
-    await get().saveAll();
+    await get().saveAllPortfolios();
   },
 }));

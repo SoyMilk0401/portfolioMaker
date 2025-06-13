@@ -1,21 +1,21 @@
 import './App.css'
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router";
-import { usePortfolioStore } from '@/stores/useportfolioStore';
+import { usePortfolioStore } from './stores/useportfolioStore';
 import Header from '@/components/Header';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
 import PortfolioEdit from '@/pages/PortfolioEdit';
 
 function App() {
-  const loadAll = usePortfolioStore((store) => store.loadAll);
+  const loadAllPortfolios = usePortfolioStore((state) => state.loadAllPortfolios)
 
   useEffect(() => {
     const fetchData = async () => {
-      await loadAll();
+      await loadAllPortfolios();
     };
     fetchData();
-  }, [loadAll]);
+  }, [loadAllPortfolios]);
 
   return (
     <BrowserRouter>
