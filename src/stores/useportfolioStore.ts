@@ -13,6 +13,8 @@ interface PortfolioState {
   addPortfolio: (data: PortfolioData) => Promise<void>;
   updatePortfolio: (data: PortfolioData) => Promise<void>;
   removePortfolio: (id: string) => Promise<void>;
+  loading: boolean,
+  setLoading: (loading: boolean) => void,
 }
 
 export const usePortfolioStore = create<PortfolioState>((set, get) => ({
@@ -63,4 +65,10 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
     }));
     await get().saveAllPortfolios();
   },
+
+  loading: false,
+
+  setLoading: (loading: boolean) => {
+    set({ loading })
+  }
 }));

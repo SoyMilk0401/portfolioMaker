@@ -9,10 +9,13 @@ import PortfolioEdit from '@/pages/PortfolioEdit';
 
 function App() {
   const loadAllPortfolios = usePortfolioStore((state) => state.loadAllPortfolios)
+  const setLoading = usePortfolioStore((state) => state.setLoading)
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       await loadAllPortfolios();
+      setLoading(false);
     };
     fetchData();
   }, [loadAllPortfolios]);

@@ -1,13 +1,15 @@
 import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
+import { Spinner } from '@/components/ui/spinner';
 import { Link } from "react-router"
 import { usePortfolioStore } from "@/stores/useportfolioStore"
-import SearchPortfolioBar from "./ui/SearchPortfolioBar"
-import CreatePortfolioButton from "./ui/CreatePortfolioButton"
-import TechStackBadge from "./ui/TechStackBadge"
+import SearchPortfolioBar from "./SearchPortfolioBar"
+import CreatePortfolioButton from "./CreatePortfolioButton"
+import TechStackBadge from "./TechStackBadge"
 
 const PortfolioList = () => {
   const portfolios = usePortfolioStore((state) => state.portfolios)
+  const loading = usePortfolioStore((state) => state.loading)
   const [search, setSearch] = useState("");
 
   const filtered_portfolios = portfolios.filter((p) =>
@@ -15,7 +17,15 @@ const PortfolioList = () => {
     p.userInfo.email?.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (!portfolios || portfolios.length === 0) {
+  if (loading) {
+    return (
+      <div className="flex items-center mt-8">
+        <Spinner size="large" />
+      </div>
+    )
+  }
+
+  if (!loading && (!portfolios || portfolios.length === 0)) {
     return (
       <div>
         <SearchPortfolioBar value={search} onChange={setSearch} />
