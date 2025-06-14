@@ -7,11 +7,17 @@ import Header from '@/components/Header';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
 import PortfolioEdit from '@/pages/PortfolioEdit';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 function App() {
   const loadAllPortfolios = usePortfolioStore((state) => state.loadAllPortfolios)
   const loading = usePortfolioStore((state) => state.loading)
   const setLoading = usePortfolioStore((state) => state.setLoading)
+
+  useEffect(() => {
+    AOS.init({ duration: 800, once: true })
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
