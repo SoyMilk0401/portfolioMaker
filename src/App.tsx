@@ -2,6 +2,7 @@ import './App.css'
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { usePortfolioStore } from './stores/useportfolioStore';
+import { Spinner } from '@/components/ui/spinner';
 import Header from '@/components/Header';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
@@ -9,6 +10,7 @@ import PortfolioEdit from '@/pages/PortfolioEdit';
 
 function App() {
   const loadAllPortfolios = usePortfolioStore((state) => state.loadAllPortfolios)
+  const loading = usePortfolioStore((state) => state.loading)
   const setLoading = usePortfolioStore((state) => state.setLoading)
 
   useEffect(() => {
@@ -26,10 +28,10 @@ function App() {
       <Routes>
         <Route path='*' element={<HomePage />} />
         <Route path="/" element={<HomePage />} />
-        <Route path="/view" element={<PortfolioView />} />
-        <Route path="/view/:id" element={<PortfolioView />} />
-        <Route path="/edit" element={<PortfolioEdit />} />
-        <Route path="/edit/:id" element={<PortfolioEdit />} />
+        <Route path="/view" element={!loading ? <PortfolioView /> : <Spinner size="large" className='flex items-center mt-8' />} />
+        <Route path="/view/:id" element={!loading ? <PortfolioView /> : <Spinner size="large" className='flex items-center mt-8' />} />
+        <Route path="/edit" element={!loading ? <PortfolioEdit /> : <Spinner size="large" className='flex items-center mt-8' />} />
+        <Route path="/edit/:id" element={!loading ? <PortfolioEdit /> : <Spinner size="large" className='flex items-center mt-8' />} />
       </Routes>
     </BrowserRouter>
   );

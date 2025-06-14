@@ -10,7 +10,6 @@ import UserInfo from "@/components/form/UserInfo";
 
 export default function PortfolioEdit() {
   const { id } = useParams();
-  console.log("PortfolioEdit id:", id);
 
   if (!id?.trim()) {
       return (

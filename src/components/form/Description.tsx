@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea"
 
 type Props = {
   register: any;
@@ -19,50 +19,26 @@ export default function Description({ register, errors }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>포트폴리오 정보</CardTitle>
-        <CardDescription>포트폴리오에 대한 정보를 입력하세요.</CardDescription>
+        <CardTitle>포트폴리오 소개</CardTitle>
+        <CardDescription>당신의 포트폴리오를 소개해주세요</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
-            <Label htmlFor="name">이름</Label>
-            <Input id="name" {...register("userInfo.name", { required: '이름은 필수입니다.' })} />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+            <Label htmlFor="title">포트폴리오 제목</Label>
+            <Input id="title" {...register("description.title", { required: '제목은 필수입니다.' })} />
+            {errors.description?.title && <p className="text-red-500 text-sm">{errors.description.title.message}</p>}
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="birthdate">생년월일</Label>
-            <Input id="birthdate" type="date" {...register("userInfo.birthdate", { required: '생년월일은 필수입니다.' })} />
-            {errors.birthdate && <p className="text-red-500 text-sm">{errors.birthdate.message}</p>}
+            <Label htmlFor="detail">포트폴리오 설명</Label>
+            <Textarea id="detail" {...register("description.detail")} />
+            {errors.description?.detail && <p className="text-red-500 text-sm">{errors.description.detail}</p>}
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="email">이메일</Label>
-            <Input
-              id="email"
-              placeholder="m@example.com"
-              {...register("userInfo.email", {
-                required: '이메일은 필수입니다.',
-                pattern: {
-                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: '유효한 이메일 주소를 입력하세요.',
-                },
-              })}
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="phone">연락처</Label>
-            <Input id="phone" type="tel" {...register("userInfo.phone")} />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="education">학력</Label>
-            <Input id="education" {...register("userInfo.education")} />
-          </div>
-          <Button variant="default" type="submit">저장하기</Button>
         </div>
       </CardContent>
       <CardFooter>
-        <p className="text-sm text-gray-500">* 모든 필드는 나중에 수정할 수 있습니다.</p>
+        <p className="text-sm text-gray-500">* 포트폴리오 설명은 100자 이내로 입력해주세요</p>
       </CardFooter>
     </Card>
-  );
+  )
 }

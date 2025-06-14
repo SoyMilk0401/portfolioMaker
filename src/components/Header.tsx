@@ -16,6 +16,11 @@ const Header = () => {
           className="text-sm text-gray-700 hover:text-slate-400 transition">
           포트폴리오 만들기
         </Link>
+        <Link 
+          to={`/edit/10bc036a-d428-4c62-ae92-bbda7939439e`} 
+          className="text-sm text-gray-700 hover:text-slate-400 transition">
+          포트폴리오 만들기
+        </Link>
       </nav>
     </div>
   );
