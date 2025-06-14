@@ -26,7 +26,7 @@ export default function Description({ register, errors }: Props) {
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="title">포트폴리오 제목</Label>
-            <Input id="title" {...register("description.title", { required: '제목은 필수입니다.' })} />
+            <Input id="title" {...register("description.title", { required: '제목은 필수입니다' })} />
             {errors.description?.title && <p className="text-red-500 text-sm">{errors.description.title.message}</p>}
           </div>
           <div className="grid gap-2">

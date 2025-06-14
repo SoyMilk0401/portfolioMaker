@@ -1,6 +1,6 @@
 export interface Description {
     title: string
-    detail: string
+    detail?: string
 }
 
 export interface UserInfo {
@@ -23,7 +23,7 @@ export interface TechStack {
 export interface RelatedLink {
     name: string
     url: string
-    description: string
+    description?: string
 }
 
 export interface Project {
@@ -31,7 +31,7 @@ export interface Project {
     date: string
     description: string
     url?: string
-    techStack?: string[]
+    techStack?: TechStack[]
     video?: string
 }
 
