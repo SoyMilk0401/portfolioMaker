@@ -1,12 +1,21 @@
+import { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router";
+import { useForm } from "react-hook-form";
+import { usePortfolioStore } from "@/stores/useportfolioStore";
+import type { PortfolioData } from "@/types/portfolio";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel"
+import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button";
-import { useParams } from "react-router";
-import { useForm, useFieldArray } from "react-hook-form";
-import type { PortfolioData } from "@/types/portfolio";
-import { usePortfolioStore } from "@/stores/useportfolioStore";
 import Description from "@/components/form/Description";
 import UserInfo from "@/components/form/UserInfo";
 import TechStack from "@/components/form/TechStack";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 export default function PortfolioEdit() {
   const { id } = useParams();
@@ -23,12 +32,30 @@ export default function PortfolioEdit() {
       </div>
     );
   }
-
+  
   const addPortfolio = usePortfolioStore((store) => store.addPortfolio);
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
   const updatePortfolio = usePortfolioStore((store) => store.updatePortfolio);
   const portfolio = getPortfolio(id);
+  const [api, setApi] = useState<CarouselApi | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
+  useEffect(() => {
+    if (!api) return;
+    // 현재 선택된 슬라이드 인덱스 추적
+    setSelectedIndex(api.selectedScrollSnap());
+    // 슬라이드 변경 이벤트 리스닝
+    api.on("select", () => setSelectedIndex(api.selectedScrollSnap()));
+  }, [api]);
+
+  const goToNext = useCallback(() => {
+    api?.scrollNext();
+  }, [api]);
+
+  const goToPrev = useCallback(() => {
+    api?.scrollPrev();
+  }, [api]);
+  
   const form = useForm<PortfolioData>({
     defaultValues: {
       id: id,
@@ -56,7 +83,7 @@ export default function PortfolioEdit() {
       projects: portfolio?.projects || [],
     }
   });
-
+  
   const { register, handleSubmit, formState: { errors }, control } = form;
   
   async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
@@ -81,13 +108,37 @@ export default function PortfolioEdit() {
     });
   };
 
+  const buttonClassName = "text-black size-8 rounded-full bg-background border border-input shadow-sm flex items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none"
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
-        <Description register={register} errors={errors} />
-        <UserInfo register={register} errors={errors} />
-        <Button variant="default" type="submit">저장하기</Button>
-      </form>
+    <div className="min-h-screen flex justify-center bg-gray-50 px-4 pt-15">
+      <div className="w-full max-w-xl">
+        <div className="flex items-center justify-between gap-2 mb-3 px-4">
+          <Button className={buttonClassName} onClick={goToPrev}>
+            <ArrowLeft />
+          </Button>
+          <Button className={buttonClassName} onClick={goToNext}>
+            <ArrowRight />
+          </Button>
+          <div className="flex-1 flex justify-center">
+            <Progress className="w-2/3" value={(selectedIndex / 5) * 100} />
+          </div>
+          <Button variant="default" type="submit">
+            작성완료
+          </Button>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
+          <Carousel setApi={setApi} opts={{
+            dragFree: true
+          }}>
+            <CarouselContent>
+              <CarouselItem><Description register={register} errors={errors} /></CarouselItem>
+              <CarouselItem><UserInfo register={register} errors={errors} /></CarouselItem>
+              <CarouselItem><TechStack register={register} errors={errors} control={control} /></CarouselItem>
+            </CarouselContent>
+          </Carousel>
+        </form>
+      </div>
     </div>
   );
 }

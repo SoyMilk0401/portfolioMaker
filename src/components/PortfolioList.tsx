@@ -66,10 +66,10 @@ const PortfolioList = () => {
                 {/* 오른쪽: 텍스트 */}
                 <div className="flex flex-col flex-1 min-w-0">
                   <div className="font-semibold text-xl text-gray-800 truncate">
-                    {p.userInfo.name}님의 포트폴리오
+                    {p.userInfo.name}
                   </div>
                   <div className="text-gray-500 text-sm truncate">{p.userInfo.email}</div>
-                  <div className="flex flex-wrap gap-2 mt-3">
+                  <div className="flex flex-wrap gap-1 mt-3">
                     {p.techStack && <TechStackBadge techStack={p.techStack} />}
                   </div>
                 </div>
