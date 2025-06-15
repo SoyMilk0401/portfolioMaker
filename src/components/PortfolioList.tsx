@@ -30,7 +30,7 @@ const PortfolioList = () => {
       <div>
         <SearchPortfolioBar value={search} onChange={setSearch} />
         <p className="text-center text-gray-500 mt-8">작성된 포트폴리오가 없습니다.</p>
-        <CreatePortfolioButton />
+        {/* <CreatePortfolioButton /> */}
       </div>
     )
   }
@@ -78,7 +78,7 @@ const PortfolioList = () => {
 
           </Link>
         ))}
-        <CreatePortfolioButton />
+        {/* <CreatePortfolioButton /> */}
       </div>
     </div>
   )

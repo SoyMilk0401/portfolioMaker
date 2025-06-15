@@ -31,7 +31,6 @@ export interface Project {
     date: string
     description: string
     url?: string
-    techStack?: TechStack[]
     video?: string
 }
 

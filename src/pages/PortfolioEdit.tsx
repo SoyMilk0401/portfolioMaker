@@ -16,6 +16,10 @@ import Description from "@/components/form/Description";
 import UserInfo from "@/components/form/UserInfo";
 import TechStack from "@/components/form/TechStack";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import RelatedLink from "@/components/form/RelatedLink";
+import Project from "@/components/form/Project";
+
+import { DevTool } from '@hookform/devtools'
 
 export default function PortfolioEdit() {
   const { id } = useParams();
@@ -83,7 +87,7 @@ export default function PortfolioEdit() {
       projects: portfolio?.projects || [],
     }
   });
-  
+
   const { register, handleSubmit, formState: { errors }, control } = form;
   
   async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
@@ -113,31 +117,32 @@ export default function PortfolioEdit() {
   return (
     <div className="min-h-screen flex justify-center bg-gray-50 px-4 pt-15">
       <div className="w-full max-w-xl">
-        <div className="flex items-center justify-between gap-2 mb-3 px-4">
-          <Button className={buttonClassName} onClick={goToPrev}>
-            <ArrowLeft />
-          </Button>
-          <Button className={buttonClassName} onClick={goToNext}>
-            <ArrowRight />
-          </Button>
-          <div className="flex-1 flex justify-center">
-            <Progress className="w-2/3" value={(selectedIndex / 5) * 100} />
-          </div>
-          <Button variant="default" type="submit">
-            작성완료
-          </Button>
-        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
-          <Carousel setApi={setApi} opts={{
-            dragFree: true
-          }}>
+          <div className="flex items-center justify-between gap-2 mb-3 px-4">
+            <Button type="button" className={buttonClassName} onClick={goToPrev}>
+              <ArrowLeft />
+            </Button>
+            <Button type="button" className={buttonClassName} onClick={goToNext}>
+              <ArrowRight />
+            </Button>
+            <div className="flex-1 flex justify-center">
+              <Progress className="w-2/3" value={(selectedIndex / 4) * 100} />
+            </div>
+            <Button variant="default" type="submit">
+              작성완료
+            </Button>
+          </div>
+          <Carousel setApi={setApi}>
             <CarouselContent>
               <CarouselItem><Description register={register} errors={errors} /></CarouselItem>
               <CarouselItem><UserInfo register={register} errors={errors} /></CarouselItem>
               <CarouselItem><TechStack register={register} errors={errors} control={control} /></CarouselItem>
+              <CarouselItem><RelatedLink register={register} errors={errors} control={control} /></CarouselItem>
+              <CarouselItem><Project register={register} errors={errors} control={control} /></CarouselItem>
             </CarouselContent>
           </Carousel>
         </form>
+        <DevTool control={control} />
       </div>
     </div>
   );

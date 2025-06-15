@@ -19,19 +19,19 @@ export default function UserInfo({ register, errors }: Props) {
     <Card>
       <CardHeader>
         <CardTitle>개발자 정보</CardTitle>
-        <CardDescription>당신의 정보를 입력하세요</CardDescription>
+        <CardDescription>개발자 정보를 입력하세요</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="name">이름</Label>
-            <Input id="name" {...register("userInfo.name", { required: '이름은 필수입니다' })} />
-            {errors.userInfo?.name && <p className="text-red-500 text-sm">{errors.userInfo.name.message}</p>}
+            <Input id="name" {...register("userInfo.name", { required: '이름은 필수입니다' })}/>
+            {errors.userInfo?.name && <p className="text-red-500 text-xs">{errors.userInfo.name.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="birthdate">생년월일</Label>
             <Input id="birthdate" type="date" {...register("userInfo.birthdate", { required: '생년월일은 필수입니다' })} />
-            {errors.userInfo?.birthdate && <p className="text-red-500 text-sm">{errors.userInfo.birthdate.message}</p>}
+            {errors.userInfo?.birthdate && <p className="text-red-500 text-xs">{errors.userInfo.birthdate.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">이메일</Label>
@@ -46,7 +46,7 @@ export default function UserInfo({ register, errors }: Props) {
                 },
               })}
             />
-            {errors.userInfo?.email && <p className="text-red-500 text-sm">{errors.userInfo.email.message}</p>}
+            {errors.userInfo?.email && <p className="text-red-500 text-xs">{errors.userInfo.email.message}</p>}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="phone">연락처</Label>
@@ -63,7 +63,7 @@ export default function UserInfo({ register, errors }: Props) {
         </div>
       </CardContent>
       <CardFooter>
-        <p className="text-sm text-gray-500">* GitHub 사용자명을 통해 프로필 사진을 추가합니다</p>
+        <p className="text-xs text-gray-500">* GitHub 사용자명을 통해 프로필 사진을 추가합니다</p>
       </CardFooter>
     </Card>
   );

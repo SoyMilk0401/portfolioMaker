@@ -3,18 +3,16 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useFieldArray } from "react-hook-form";
 
-export default function StackField({
+export default function TechStackField({
   label,
   name,
   control,
   register,
-  error,
 }: {
   label: string;
   name: `techStack.${"language" | "frontend" | "backend" | "devops"}`;
   control: any;
   register: any;
-  error: any;
 }) {
 
   const { fields, append, remove } = useFieldArray({ control, name });
@@ -33,7 +31,6 @@ export default function StackField({
       <Button type="button" size="sm" variant="secondary" onClick={() => append("")}>
         추가
       </Button>
-      {error && <p className="text-red-500 text-sm">{error.message}</p>}
     </div>
   );
 }
