@@ -33,16 +33,8 @@ export default function Description({ register, errors }: Props) {
             <Label htmlFor="detail">포트폴리오 설명</Label>
             <Textarea id="detail" {...register("description.detail")} />
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">포트폴리오 비밀번호</Label>
-            <Input id="password" {...register("password", { required: '비밀번호는 필수입니다' })} />
-            {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
-          </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <p className="text-xs text-gray-500">* 포트폴리오 비밀번호는 포트폴리오 수정 및 삭제시 활용됩니다</p>
-      </CardFooter>
     </Card>
   )
 }

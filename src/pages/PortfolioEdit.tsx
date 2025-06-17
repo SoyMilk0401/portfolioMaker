@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { usePortfolioStore } from "@/stores/useportfolioStore";
 import type { PortfolioData } from "@/types/portfolio";
@@ -12,6 +12,8 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
 import Description from "@/components/form/Description";
 import UserInfo from "@/components/form/UserInfo";
 import TechStack from "@/components/form/TechStack";
@@ -20,8 +22,10 @@ import RelatedLink from "@/components/form/RelatedLink";
 import Project from "@/components/form/Project";
 
 import { DevTool } from '@hookform/devtools'
+import FormSubmit from "@/components/form/FormSubmit";
 
 export default function PortfolioEdit() {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   if (!id?.trim()) {
@@ -40,6 +44,7 @@ export default function PortfolioEdit() {
   const addPortfolio = usePortfolioStore((store) => store.addPortfolio);
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
   const updatePortfolio = usePortfolioStore((store) => store.updatePortfolio);
+  const removePortfolio = usePortfolioStore((store) => store.removePortfolio);
   const portfolio = getPortfolio(id);
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -59,11 +64,11 @@ export default function PortfolioEdit() {
   const goToPrev = useCallback(() => {
     api?.scrollPrev();
   }, [api]);
-  
+
   const form = useForm<PortfolioData>({
     defaultValues: {
       id: id,
-      password: portfolio?.password || "",
+      password: "",
       description: {
         title: portfolio?.description?.title || "",
         detail: portfolio?.description?.detail || "",
@@ -88,7 +93,7 @@ export default function PortfolioEdit() {
     }
   });
 
-  const { register, handleSubmit, formState: { errors }, control } = form;
+  const { register, handleSubmit, watch, formState: { errors }, control } = form;
   
   async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
     if (!username) return undefined;
@@ -98,26 +103,48 @@ export default function PortfolioEdit() {
     return data.avatar_url;
   }
 
-  const onSubmit = (data: PortfolioData) => {
+  const onSubmit = async (data: PortfolioData) => {
+    if (portfolio?.password !== data.password && portfolio?.password !== undefined) {
+      toast.error("비밀번호가 일치하지 않습니다.")
+      return 
+    }
+
     fetchGithubAvatar(data.userInfo.githubUsername).then((avatarUrl) => {
       if (avatarUrl) {
         data.userInfo.photo = avatarUrl;
       }
+    })
 
-      if (portfolio === undefined) {
-        addPortfolio(data);
-      } else {
-        updatePortfolio(data);
-      }
-    });
+    if (portfolio === undefined) {
+      await addPortfolio(data);
+    } else {
+      await updatePortfolio(data);
+    }
+
+    navigate(`/view/${id}`);
   };
+
+  const onError = () => {
+    toast.error("필수 항목을 모두 채워주세요.");
+  };
+
+  const onDelete = async () => {
+    const values = watch('password');
+    if (portfolio?.password !== values) {
+      toast.error("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+      await removePortfolio(id);
+    navigate("/");
+  }
 
   const buttonClassName = "text-black size-8 rounded-full bg-background border border-input shadow-sm flex items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none"
 
   return (
     <div className="min-h-screen flex justify-center bg-gray-50 px-4 pt-15">
+      <Toaster position="top-center" richColors/>
       <div className="w-full max-w-xl">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-xl">
+        <form onSubmit={handleSubmit(onSubmit, onError)} className="w-full max-w-xl">
           <div className="flex items-center justify-between gap-2 mb-3 px-4">
             <Button type="button" className={buttonClassName} onClick={goToPrev}>
               <ArrowLeft />
@@ -125,12 +152,9 @@ export default function PortfolioEdit() {
             <Button type="button" className={buttonClassName} onClick={goToNext}>
               <ArrowRight />
             </Button>
-            <div className="flex-1 flex justify-center">
-              <Progress className="w-2/3" value={(selectedIndex / 4) * 100} />
+            <div className="flex-1 flex justify-end">
+              <Progress className="w-1/3" value={(selectedIndex / 5) * 100} />
             </div>
-            <Button variant="default" type="submit">
-              작성완료
-            </Button>
           </div>
           <Carousel setApi={setApi}>
             <CarouselContent>
@@ -139,6 +163,7 @@ export default function PortfolioEdit() {
               <CarouselItem><TechStack register={register} errors={errors} control={control} /></CarouselItem>
               <CarouselItem><RelatedLink register={register} errors={errors} control={control} /></CarouselItem>
               <CarouselItem><Project register={register} errors={errors} control={control} /></CarouselItem>
+              <CarouselItem><FormSubmit register={register} errors={errors} onDelete={onDelete} /></CarouselItem>
             </CarouselContent>
           </Carousel>
         </form>
