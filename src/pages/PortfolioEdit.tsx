@@ -20,9 +20,9 @@ import TechStack from "@/components/form/TechStack";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import RelatedLink from "@/components/form/RelatedLink";
 import Project from "@/components/form/Project";
-
-import { DevTool } from '@hookform/devtools'
 import FormSubmit from "@/components/form/FormSubmit";
+
+// import { DevTool } from '@hookform/devtools'
 
 export default function PortfolioEdit() {
   const navigate = useNavigate();
@@ -92,8 +92,12 @@ export default function PortfolioEdit() {
       projects: portfolio?.projects || [],
     }
   });
-
+ 
   const { register, handleSubmit, watch, formState: { errors }, control } = form;
+
+  // useEffect(() => {
+  //   reset({...portfolio, password:""})
+  // }, [portfolio, form])
   
   async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
     if (!username) return undefined;
@@ -125,12 +129,12 @@ export default function PortfolioEdit() {
   };
 
   const onError = () => {
-    toast.error("필수 항목을 모두 채워주세요.");
+    toast.error("필수 항목을 모두 입력해주세요.");
   };
 
   const onDelete = async () => {
     const values = watch('password');
-    if (portfolio?.password !== values) {
+    if (portfolio?.password !== values && portfolio?.password !== undefined) {
       toast.error("비밀번호가 일치하지 않습니다.");
       return;
     }
@@ -167,7 +171,7 @@ export default function PortfolioEdit() {
             </CarouselContent>
           </Carousel>
         </form>
-        <DevTool control={control} />
+        {/* <DevTool control={control} /> */}
       </div>
     </div>
   );

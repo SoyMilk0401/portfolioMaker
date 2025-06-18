@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   register: any;
@@ -42,7 +42,7 @@ export default function FormSubmit({ register, errors, onDelete }: Props) {
         <div className="flex flex-col gap-6">
           <div className="grid gap-2">
             <Label htmlFor="password">포트폴리오 비밀번호</Label>
-            <Input id="password" type="password" {...register("password", { required: '비밀번호는 필수입니다' })} />
+            <Input id="password" {...register("password", { required: '비밀번호는 필수입니다' })} />
             {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
           </div>
           <div className="flex justify-end gap-3">

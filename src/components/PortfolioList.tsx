@@ -4,8 +4,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { Link } from "react-router"
 import { usePortfolioStore } from "@/stores/useportfolioStore"
 import SearchPortfolioBar from "./SearchPortfolioBar"
-import CreatePortfolioButton from "./CreatePortfolioButton"
 import TechStackBadge from "./TechStackBadge"
+// import CreatePortfolioButton from "./CreatePortfolioButton"
 
 const PortfolioList = () => {
   const portfolios = usePortfolioStore((state) => state.portfolios)
@@ -38,7 +38,7 @@ const PortfolioList = () => {
   return (
     <div>
       <div className="w-full max-w-2xl mx-auto px-4 mb-6">
-      <SearchPortfolioBar value={search} onChange={setSearch} />
+        <SearchPortfolioBar value={search} onChange={setSearch} />
       </div>
       <div className="grid grid-cols-2 gap-6 mt-4 w-full max-w-2xl">
         {filtered_portfolios.map((p) => (
