@@ -1,7 +1,7 @@
 import { useParams } from "react-router"
 import { usePortfolioStore } from "@/stores/useportfolioStore"
 
-function PortfolioView() {
+function PortfolioView_old() {
   const { id } = useParams()
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio)
 
@@ -75,7 +75,6 @@ function PortfolioView() {
                 {p.url}
               </a>
             )}
-            <p>기술: {p.techStack.join(", ")}</p>
             {p.video && (
               <video controls className="mt-2 w-full rounded">
                 <source src={p.video} type="video/mp4" />
@@ -88,4 +87,4 @@ function PortfolioView() {
   )
 }
 
-export default PortfolioView
+export default PortfolioView_old

@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router";
 import { usePortfolioStore } from './stores/useportfolioStore';
 import { Spinner } from '@/components/ui/spinner';
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 import Header from '@/components/Header';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
 import PortfolioEdit from '@/pages/PortfolioEdit';
-import AOS from 'aos'
-import 'aos/dist/aos.css'
 
 function App() {
   const loadAllPortfolios = usePortfolioStore((state) => state.loadAllPortfolios)
