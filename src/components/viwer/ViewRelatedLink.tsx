@@ -18,13 +18,15 @@ export default function ViewRelatedLink({relatedlink} : {relatedlink: RelatedLin
                 </h1>
                 <div className="grid grid-cols-2 gap-4 mt-8">
                 {relatedlink.map((link) => (
-                        <Card>
+                        <Card key={link.url}>
                             <CardHeader>
                                 <CardTitle>{link.name}</CardTitle>
                                 <CardDescription>{link.description}</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <Button variant="link" className="px-0">{link.url}</Button>
+                                <Button asChild variant="link" className="px-0">
+                                    <a href={link.url} target="_blank" rel="noopener noreferrer">{link.url}</a>
+                                </Button>
                             </CardContent>
                         </Card>
                 ))}

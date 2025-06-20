@@ -3,7 +3,6 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -91,9 +90,6 @@ export default function ProjectField({
               />
             </div>
           </CardContent>
-          <CardFooter>
-            <p className="text-xs text-gray-500">* 시연 영상은 프로젝트 자세히 보기에서 바로 시청할 수 있습니다</p>
-          </CardFooter>
         </Card>
       ))}
       <Button
@@ -104,7 +100,6 @@ export default function ProjectField({
       >
         추가
       </Button>
-      {/* 필요하다면 에러 메시지 추가 */}
     </div>
   );
 }

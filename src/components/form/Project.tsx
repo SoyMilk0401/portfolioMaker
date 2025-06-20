@@ -31,7 +31,7 @@ export default function Project({ register, control }: Props) {
                 </div>
             </CardContent>
             <CardFooter>
-                <p className="text-xs text-gray-500"></p>
+                <p className="text-xs text-gray-500">* 시연 영상은 유튜브 링크를 입력해주세요</p>
             </CardFooter>
         </Card>
     )

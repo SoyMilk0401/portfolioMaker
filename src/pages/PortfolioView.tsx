@@ -5,6 +5,7 @@ import ViewDescription from "@/components/viwer/ViewDescription";
 import ViewUserInfo from "@/components/viwer/ViewUserInfo";
 import ViewTechStack from "@/components/viwer/ViewTechStack";
 import ViewRelatedLink from "@/components/viwer/ViewRelatedLink";
+import ViewProject from "@/components/viwer/ViewProject";
 
 export default function PortfolioVirw() {
   const { id } = useParams();
@@ -45,6 +46,7 @@ export default function PortfolioVirw() {
       <ViewUserInfo userinfo={portfolio.userInfo}/>
       {portfolio.techStack && <ViewTechStack techstack={portfolio.techStack} />}
       {portfolio.relatedLinks && <ViewRelatedLink relatedlink={portfolio.relatedLinks} />}
+      {portfolio.projects && <ViewProject project={portfolio.projects} />}
     </div>
   )
 
