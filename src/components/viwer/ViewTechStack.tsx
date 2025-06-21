@@ -3,10 +3,8 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import { FaLaptopCode } from "react-icons/fa";
-import { BiSolidFileHtml } from "react-icons/bi";
+import { FaLaptopCode, FaHtml5, FaCloud } from "react-icons/fa";
 import { FaServer } from "react-icons/fa6";
-import { PiInfinityFill } from "react-icons/pi";
 
 
 export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
@@ -37,7 +35,7 @@ export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
                         {/* Frontend */}
                         <div className="flex items-center gap-6 mt-6">
                           <div className="flex items-center min-w-[120px]">
-                            <BiSolidFileHtml size={40} className="mr-2" />
+                            <FaHtml5 size={41} className="mr-2 pr-1" />
                             <span className="font-semibold">Frontend</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
@@ -52,7 +50,7 @@ export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
                         {/* Backend */}
                         <div className="flex items-center gap-6 mt-6">
                           <div className="flex items-center min-w-[120px]">
-                            <FaServer size={35} className="mr-3" />
+                            <FaServer size={35} className="mr-3 ml-0.5" />
                             <span className="font-semibold">Backend</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
@@ -67,7 +65,7 @@ export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
                         {/* DevOps */}
                         <div className="flex items-center gap-6 mt-6">
                           <div className="flex items-center min-w-[120px]">
-                            <PiInfinityFill size={40} className="mr-2" />
+                            <FaCloud size={39} className="mr-2.5" />
                             <span className="font-semibold">DevOps</span>
                           </div>
                           <div className="flex flex-wrap gap-2">
