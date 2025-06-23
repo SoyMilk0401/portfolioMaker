@@ -3,6 +3,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+    font-family: 'Pretendard Variable';
+    font-weight: 45 920; /* 가변 폰트의 두께 범위 */
+    font-style: normal;
+    font-display: swap; /* 폰트 로딩 시 자연스러운 전환을 위함 */
+    src: url('./assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -113,6 +121,7 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    --font-sans: "Pretendard Variable", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   }
   body {
     @apply bg-background text-foreground;
