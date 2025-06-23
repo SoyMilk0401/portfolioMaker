@@ -8,7 +8,7 @@
     font-weight: 45 920; /* 가변 폰트의 두께 범위 */
     font-style: normal;
     font-display: swap; /* 폰트 로딩 시 자연스러운 전환을 위함 */
-    src: url('./assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+    src: url('./fonts/PretendardVariable.woff2') format('woff2-variations');
 }
 
 @theme inline {
@@ -50,6 +50,7 @@
 }
 
 :root {
+  scrollbar-width: none;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

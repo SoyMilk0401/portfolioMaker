@@ -1,6 +1,9 @@
+import usePageTitle from "@/components/hooks/usePageTitle"
 import PortfolioList from "@/components/PortfolioList"
 
 function Home() {
+
+  usePageTitle('PortfolioMaker')
 
   return (
     <div className="flex flex-col items-center justify-start min-h-[40vh] mt-12 text-center px-4">

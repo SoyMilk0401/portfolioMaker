@@ -21,6 +21,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import RelatedLink from "@/components/form/RelatedLink";
 import Project from "@/components/form/Project";
 import FormSubmit from "@/components/form/FormSubmit";
+import usePageTitle from "@/components/hooks/usePageTitle";
 
 // import { DevTool } from '@hookform/devtools'
 
@@ -48,6 +49,8 @@ export default function PortfolioEdit() {
   const portfolio = getPortfolio(id);
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+
+  usePageTitle('PortfolioEdit')
 
   useEffect(() => {
     if (!api) return;

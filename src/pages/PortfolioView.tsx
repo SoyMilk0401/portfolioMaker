@@ -6,10 +6,13 @@ import ViewUserInfo from "@/components/viwer/ViewUserInfo";
 import ViewTechStack from "@/components/viwer/ViewTechStack";
 import ViewRelatedLink from "@/components/viwer/ViewRelatedLink";
 import ViewProject from "@/components/viwer/ViewProject";
+import usePageTitle from "@/components/hooks/usePageTitle";
 
 export default function PortfolioVirw() {
   const { id } = useParams();
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
+
+  usePageTitle('PortfolioView')
 
   if (!id?.trim()) {
     return (
