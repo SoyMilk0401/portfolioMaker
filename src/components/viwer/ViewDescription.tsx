@@ -9,7 +9,7 @@ export default function ViewDescription({ description }: { description: Descript
                     {description.title}
                 </h1>
                 {description.detail && 
-                <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+                <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mt-2.5">
                     {description.detail}
                 </h3>}
             </div>

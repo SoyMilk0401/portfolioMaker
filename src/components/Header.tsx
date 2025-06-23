@@ -16,11 +16,6 @@ const Header = () => {
           className="text-sm text-gray-700 hover:text-slate-400 transition">
           포트폴리오 만들기
         </button>
-        <Link 
-          to={`/edit/c6e7c432-b26e-49d0-bc9f-46c98a2e4a3b`} 
-          className="text-sm text-gray-700 hover:text-slate-400 transition">
-          포트폴리오 만들기
-        </Link>
       </nav>
     </div>
   );

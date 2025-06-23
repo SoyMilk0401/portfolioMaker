@@ -5,6 +5,7 @@ import { usePortfolioStore } from './stores/useportfolioStore';
 import { Spinner } from '@/components/ui/spinner';
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import ScrollToTop from '@/components/ScrollToTop';
 import Header from '@/components/Header';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Header/>
       <Routes>
         <Route path='*' element={<HomePage />} />

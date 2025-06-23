@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import { usePortfolioStore } from "@/stores/useportfolioStore"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import ViewDescription from "@/components/viwer/ViewDescription";
@@ -47,6 +47,11 @@ export default function PortfolioVirw() {
       {portfolio.techStack && <ViewTechStack techstack={portfolio.techStack} />}
       {portfolio.relatedLinks && <ViewRelatedLink relatedlink={portfolio.relatedLinks} />}
       {portfolio.projects && <ViewProject project={portfolio.projects} />}
+      <Link 
+        to={`/edit/${id}`} 
+        className="text-sm text-gray-700 hover:text-slate-400 transition">
+        수정하기
+      </Link>
     </div>
   )
 
