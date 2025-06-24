@@ -1,7 +1,7 @@
 import './App.css'
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router";
-import { usePortfolioStore } from './stores/useportfolioStore';
+import { usePortfolioStore } from '@/stores/useportfolioStore';
 import { Spinner } from '@/components/ui/spinner';
 import AOS from 'aos'
 import 'aos/dist/aos.css'

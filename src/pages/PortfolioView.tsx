@@ -47,7 +47,7 @@ export default function PortfolioView() {
       {portfolio.projects && <ViewProject project={portfolio.projects} />}
       <Link
         to={`/edit/${id}`}
-        className="text-sm text-gray-700 hover:text-slate-400 transition"
+        className="text-sm text-gray-700 hover:text-slate-400 transition mt-7"
       >
         수정하기
       </Link>
