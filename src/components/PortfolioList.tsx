@@ -40,7 +40,7 @@ const PortfolioList = () => {
       <div className="w-full max-w-2xl mx-auto px-4 mb-6">
         <SearchPortfolioBar value={search} onChange={setSearch} />
       </div>
-      <div className="grid grid-cols-2 gap-6 mt-4 w-full max-w-2xl">
+      <div className="grid grid-cols-3 gap-6 mt-4 w-full max-w-5xl">
         {filtered_portfolios.map((p) => (
           <Link
             key={p.id}
