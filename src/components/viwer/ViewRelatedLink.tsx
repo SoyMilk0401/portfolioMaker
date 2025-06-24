@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
 export default function ViewRelatedLink({ relatedlink }: { relatedlink: RelatedLink[] }) {
@@ -39,7 +38,7 @@ export default function ViewRelatedLink({ relatedlink }: { relatedlink: RelatedL
                 className="inline-flex items-center gap-2 text-blue-600 text-sm hover:underline"
               >
                 {link.url}
-                <FaExternalLinkAlt size={12} />
+                <FaExternalLinkAlt size={11} />
               </a>
             </CardContent>
           </Card>

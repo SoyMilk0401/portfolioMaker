@@ -13,10 +13,10 @@ export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
 
       <Card className="max-w-5xl mx-auto p-6 shadow">
         <CardContent className="space-y-6">
-          <StackItem icon={<FaLaptopCode size={28} />} label="Language" items={techstack.language} />
-          <StackItem icon={<FaHtml5 size={28} />} label="Frontend" items={techstack.frontend} />
-          <StackItem icon={<FaServer size={26} />} label="Backend" items={techstack.backend} />
-          <StackItem icon={<FaCloud size={26} />} label="DevOps" items={techstack.devops} />
+          <StackItem icon={<FaLaptopCode size={30} />} label="Language" items={techstack.language} />
+          <StackItem icon={<FaHtml5 size={30} />} label="Frontend" items={techstack.frontend} />
+          <StackItem icon={<FaServer size={30} />} label="Backend" items={techstack.backend} />
+          <StackItem icon={<FaCloud size={30} />} label="DevOps" items={techstack.devops} />
         </CardContent>
       </Card>
     </section>
@@ -33,8 +33,8 @@ function StackItem({
   items: string[];
 }) {
   return (
-    <div className="flex items-start gap-6">
-      <div className="flex items-center min-w-[120px] text-blue-600 gap-2">
+    <div className="flex items-start gap-4">
+      <div className="flex items-center min-w-[120px] text-blue-600 gap-4">
         {icon}
         <span className="font-semibold text-base">{label}</span>
       </div>

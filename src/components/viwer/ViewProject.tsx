@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import getVideoId from "get-video-id";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 export default function ViewProject({ project }: { project: Project[] }) {
   const ensureAbsoluteUrl = (url: string) => {
@@ -43,9 +44,10 @@ export default function ViewProject({ project }: { project: Project[] }) {
                     href={ensureAbsoluteUrl(project.url)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-500 text-sm hover:underline"
+                    className="inline-flex items-center gap-2 text-blue-600 text-sm hover:underline"
                   >
                     {project.url}
+                    <FaExternalLinkAlt size={11} />
                   </a>
                 )}
               </div>
