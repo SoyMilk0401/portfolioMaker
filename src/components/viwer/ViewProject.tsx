@@ -50,7 +50,7 @@ export default function ViewProject({project} : {project: Project[]}) {
                                             <DialogTitle>{project.title}</DialogTitle>
                                             <DialogDescription></DialogDescription>
                                         </DialogHeader>
-                                        {youtubeVideoId ? 
+                                        {youtubeVideoId?.id ? 
                                             <div className="relative pt-[56.25%] w-full overflow-hidden bg-black">
                                                 <iframe
                                                     src={`https://www.youtube.com/embed/${youtubeVideoId.id}?autoplay=1&rel=0&modestbranding=1`}
