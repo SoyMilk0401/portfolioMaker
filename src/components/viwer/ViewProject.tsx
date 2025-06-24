@@ -15,25 +15,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import getVideoId from 'get-video-id';
 
 export default function ViewProject({project} : {project: Project[]}) {
-
-    function getYoutubeVideoId(url: string | undefined): string | null {
-        if (!url) return null;
-
-        const regex = /(?:https?:\/\/(?:www\.)?youtube\.com\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})(?:\S+)?|https?:\/\/youtu\.be\/([a-zA-Z0-9_-]{11}))/;
-        const match = url.match(regex);
-
-        if (match) {
-            return match[1] || match[2] || null;
-        }
-
-        if (url.length === 11 && /^[a-zA-Z0-9_-]{11}$/.test(url)) {
-            return url;
-        }
-
-        return null;
-    }
 
     return (
         <div className="w-full px-0">
@@ -43,7 +27,7 @@ export default function ViewProject({project} : {project: Project[]}) {
                 </h1>
                 <div className="grid grid-cols-2 gap-4 mt-8">
                 {project.map((project) => {
-                    const youtubeVideoId = getYoutubeVideoId(project.video);
+                    const youtubeVideoId = project.video ? getVideoId(project.video) : null;
                     
                     return (
                     
@@ -69,7 +53,7 @@ export default function ViewProject({project} : {project: Project[]}) {
                                         {youtubeVideoId ? 
                                             <div className="relative pt-[56.25%] w-full overflow-hidden bg-black">
                                                 <iframe
-                                                    src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
+                                                    src={`https://www.youtube.com/embed/${youtubeVideoId.id}?autoplay=1&rel=0&modestbranding=1`}
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     allowFullScreen
                                                     title={project.title}
