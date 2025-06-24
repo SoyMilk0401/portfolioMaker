@@ -19,6 +19,13 @@ import getVideoId from 'get-video-id';
 
 export default function ViewProject({project} : {project: Project[]}) {
 
+    const ensureAbsoluteUrl = (url: string) => {
+        if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
+            return url;
+        }
+        return `https://${url}`;
+    };
+
     return (
         <div className="w-full px-0">
             <div className="max-w-4xl mx-auto">
@@ -40,9 +47,11 @@ export default function ViewProject({project} : {project: Project[]}) {
                                 <p>
                                     {project.description}
                                 </p>
-                                <blockquote className="mt-6 border-l-2 pl-3 italic text-xs mb-5">
-                                    <a href={project.url} target="_blank" rel="noopener noreferrer">{project.url}</a>
-                                </blockquote>
+                                {project.url &&
+                                    <blockquote className="mt-6 border-l-2 pl-3 italic text-xs mb-5">
+                                        <a href={ensureAbsoluteUrl(project.url)} target="_blank" rel="noopener noreferrer">{project.url}</a>
+                                    </blockquote>                           
+                                }
                                 <Dialog>
                                     <DialogTrigger asChild><Button size="sm" variant="outline">시연 영상</Button></DialogTrigger>
                                     <DialogContent className="sm:max-w-[1600px] w-full max-h-[100vh] overflow-auto">

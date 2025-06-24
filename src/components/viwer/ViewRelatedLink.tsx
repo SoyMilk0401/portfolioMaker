@@ -10,6 +10,13 @@ import { Button } from "@/components/ui/button"
 
 export default function ViewRelatedLink({relatedlink} : {relatedlink: RelatedLink[]}) {
 
+    const ensureAbsoluteUrl = (url: string) => {
+        if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("//")) {
+            return url;
+        }
+        return `https://${url}`;
+    };
+
     return (
         <div className="w-full px-0">
             <div className="max-w-4xl mx-auto">
@@ -25,7 +32,7 @@ export default function ViewRelatedLink({relatedlink} : {relatedlink: RelatedLin
                             </CardHeader>
                             <CardContent>
                                 <Button asChild variant="link" className="px-0">
-                                    <a href={link.url} target="_blank" rel="noopener noreferrer">{link.url}</a>
+                                    <a href={ensureAbsoluteUrl(link.url)} target="_blank" rel="noopener noreferrer">{link.url}</a>
                                 </Button>
                             </CardContent>
                         </Card>
