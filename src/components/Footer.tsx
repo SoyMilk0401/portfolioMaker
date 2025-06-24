@@ -8,7 +8,7 @@ export default function Footer() {
     <footer className="bg-background border-t py-3 md:py-4 max-h-24">
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 md:flex-row">
         <p className="text-sm text-muted-foreground">
-          © {currentYear} Han & Kim. All rights reserved.
+          © {currentYear} Soymilk0401 & kwolk82
         </p>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" asChild>
