@@ -2,77 +2,30 @@ import type { UserInfo } from "@/types/portfolio";
 import { FaUser, FaCalendar, FaPhoneAlt } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import Field from "@/components/ui/field";
+
 
 export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
+  return (
+    <section className="w-full bg-white py-12 px-4" data-aos="fade-up">
+      <div className="max-w-4xl mx-auto text-center mb-10">
+        <h1 className="text-4xl font-bold mb-4">ABOUT ME</h1>
+        <p className="text-gray-600 text-lg">{userinfo.bio ?? ""}</p>
+      </div>
 
-    return (
-        <div className="w-full px-0">
-            <div className="max-w-4xl mx-auto">
-                <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
-                    ABOUT ME
-                </h1>
-                <div className="grid grid-cols-3 gap-8 items-center mt-4">
-                    <div className="flex items-center gap-6 mt-6">
-                        <FaUser size={35} />
-                        <div>
-                            <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                                이름
-                            </h3>
-                            <h4 className="scroll-m-20 text-lg tracking-tight">
-                                {userinfo.name}
-                            </h4>               
-                        </div>
-                    </div>
+      <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <Field icon={<FaUser size={30} />} label="이름" value={userinfo.name || ""} />
+        <Field icon={<FaCalendar size={30} />} label="생년월일" value={userinfo.birthdate || ""} />
+        <Field icon={<MdEmail size={30} />} label="이메일" value={userinfo.email || ""} />
 
-                    <div className="flex items-center gap-6 mt-6">
-                        <FaCalendar size={35} />
-                        <div>
-                            <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                                생년월일
-                            </h3>
-                            <h4 className="scroll-m-20 text-lg tracking-tight">
-                                {userinfo.birthdate}
-                            </h4>               
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-6 mt-6">
-                        <MdEmail size={43} />
-                        <div>
-                            <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                                이메일
-                            </h3>
-                            <h4 className="scroll-m-20 text-lg tracking-tight">
-                                {userinfo.email}
-                            </h4>               
-                        </div>
-                    </div>
-
-                    {userinfo.phone && (<div className="flex items-center gap-6 mt-6">
-                        <FaPhoneAlt size={35} />
-                        <div>
-                            <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                                연락처
-                            </h3>
-                            <h4 className="scroll-m-20 text-lg tracking-tight">
-                                {userinfo.phone}
-                            </h4>               
-                        </div>
-                    </div>)}
-
-                    {userinfo.education && (<div className="flex items-center gap-6 mt-6">
-                        <FaPencil size={40} />
-                        <div>
-                            <h3 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                                학력
-                            </h3>
-                            <h4 className="scroll-m-20 text-lg tracking-tight">
-                                {userinfo.education}
-                            </h4>               
-                        </div>
-                    </div>)}
-                </div>
-            </div>
-        </div>
-    )
+        {userinfo.phone && (
+          <Field icon={<FaPhoneAlt size={30} />} label="연락처" value={userinfo.phone} />
+        )}
+        {userinfo.education && (
+          <Field icon={<FaPencil size={30} />} label="학력" value={userinfo.education} />
+        )}
+      </div>
+    </section>
+  );
 }
+
