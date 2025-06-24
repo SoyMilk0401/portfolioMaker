@@ -20,7 +20,7 @@ export default function RelatedLink({ register, control }: Props) {
         <Card>
             <CardHeader>
                 <CardTitle>URL</CardTitle>
-                <CardDescription>Github, 개인 블로그 등 원하는 url을 입력해주세요</CardDescription>
+                <CardDescription>개인 Github 링크, 개인 블로그 등 원하는 url을 입력해주세요</CardDescription>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-col gap-6">

@@ -39,7 +39,7 @@ export default function PortfolioView() {
   usePageTitle(`${portfolio.userInfo.name}님의 포트폴리오`);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4 py-10 space-y-20">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-10 space-y-0">
       <ViewDescription description={portfolio.description} />
       <ViewUserInfo userinfo={portfolio.userInfo} />
       {portfolio.techStack && <ViewTechStack techstack={portfolio.techStack} />}

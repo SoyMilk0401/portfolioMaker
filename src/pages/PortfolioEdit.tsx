@@ -148,7 +148,7 @@ export default function PortfolioEdit() {
   const buttonClassName = "text-black size-8 rounded-full bg-background border border-input shadow-sm flex items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none"
 
   return (
-    <div className="min-h-screen flex justify-center bg-gray-50 px-4 pt-15">
+    <div className="min-h-screen flex justify-center bg-white px-4 pt-15">
       <Toaster position="top-center" richColors/>
       <div className="w-full max-w-xl">
         <form onSubmit={handleSubmit(onSubmit, onError)} className="w-full max-w-xl">

@@ -19,13 +19,13 @@ export default function ViewProject({ project }: { project: Project[] }) {
   };
 
   return (
-    <section className="w-full px-4 py-16 bg-white" data-aos="fade-up" data-aos-delay="100">
+    <section className="w-full px-4 py-14 bg-white" data-aos="fade-up" data-aos-delay="100">
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold">PROJECTS</h2>
         <p className="text-gray-500 text-sm mt-2">제가 참여한 주요 프로젝트들입니다.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
         {project.map((project) => {
           const youtubeVideoId = project.video ? getVideoId(project.video) : null;
 

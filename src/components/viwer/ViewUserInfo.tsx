@@ -10,7 +10,6 @@ export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
     <section className="w-full bg-white py-12 px-4" data-aos="fade-up">
       <div className="max-w-4xl mx-auto text-center mb-10">
         <h1 className="text-4xl font-bold mb-4">ABOUT ME</h1>
-        <p className="text-gray-600 text-lg">{userinfo.bio ?? ""}</p>
       </div>
 
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -18,7 +18,7 @@ export default function ViewRelatedLink({ relatedlink }: { relatedlink: RelatedL
   };
 
   return (
-    <section className="w-full px-4 py-16 bg-white" data-aos="fade-up" data-aos-delay="300">
+    <section className="w-full px-4 py-12 bg-white" data-aos="fade-up" data-aos-delay="300">
       <div className="max-w-5xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold">LINKS</h2>
         <p className="text-gray-500 text-sm mt-2">관련 링크들을 확인해보세요.</p>

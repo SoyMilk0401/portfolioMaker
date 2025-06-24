@@ -5,7 +5,7 @@ import { FaServer } from "react-icons/fa6";
 
 export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
   return (
-    <section className="w-full px-4 py-16 bg-white" data-aos="fade-up">
+    <section className="w-full px-4 py-12 bg-white" data-aos="fade-up">
       <div className="max-w-5xl mx-auto text-center mb-12">
         <h2 className="text-4xl font-bold">Tech Stack</h2>
         <p className="text-gray-500 text-sm mt-2">사용 기술을 분야별로 정리했습니다.</p>

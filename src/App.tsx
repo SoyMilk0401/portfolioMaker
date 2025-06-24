@@ -7,6 +7,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import ScrollToTop from '@/components/ScrollToTop';
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import HomePage from '@/pages/Home';
 import PortfolioView from '@/pages/PortfolioView';
 import PortfolioEdit from '@/pages/PortfolioEdit';
@@ -31,16 +32,22 @@ function App() {
 
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <Header/>
-      <Routes>
-        <Route path='*' element={<HomePage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/view" element={!loading ? <PortfolioView /> : <Spinner size="large" className='flex items-center mt-8' />} />
-        <Route path="/view/:id" element={!loading ? <PortfolioView /> : <Spinner size="large" className='flex items-center mt-8' />} />
-        <Route path="/edit" element={!loading ? <PortfolioEdit /> : <Spinner size="large" className='flex items-center mt-8' />} />
-        <Route path="/edit/:id" element={!loading ? <PortfolioEdit /> : <Spinner size="large" className='flex items-center mt-8' />} />
-      </Routes>
+      <div className="flex flex-col min-h-screen">
+        <ScrollToTop />
+        <Header/>
+        <main className="flex-grow">
+          <Routes>
+            <Route path='*' element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/view" element={!loading ? <PortfolioView /> : <div className="flex justify-center items-center h-full pt-20"><Spinner size="large" /></div>} />
+            <Route path="/view/:id" element={!loading ? <PortfolioView /> : <div className="flex justify-center items-center h-full pt-20"><Spinner size="large" /></div>} />
+            <Route path="/edit" element={!loading ? <PortfolioEdit /> : <div className="flex justify-center items-center h-full pt-20"><Spinner size="large" /></div>} />
+            <Route path="/edit/:id" element={!loading ? <PortfolioEdit /> : <div className="flex justify-center items-center h-full pt-20"><Spinner size="large" /></div>} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }
