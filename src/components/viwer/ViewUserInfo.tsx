@@ -11,7 +11,7 @@ export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
                 <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
                     ABOUT ME
                 </h1>
-                <div className="grid grid-cols-3 gap-8 items-center">
+                <div className="grid grid-cols-3 gap-8 items-center mt-4">
                     <div className="flex items-center gap-6 mt-6">
                         <FaUser size={35} />
                         <div>
