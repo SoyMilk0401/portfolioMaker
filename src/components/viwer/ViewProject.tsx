@@ -60,7 +60,7 @@ export default function ViewProject({ project }: { project: Project[] }) {
                         시연 영상 보기
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-4xl w-full max-h-[90vh] overflow-auto">
+                    <DialogContent className="max-w-7xl w-full max-h-[90vh] overflow-auto">
                       <DialogHeader>
                         <DialogTitle>{project.title}</DialogTitle>
                       </DialogHeader>
