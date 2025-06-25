@@ -46,11 +46,23 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   },
 
   addPortfolio: async (data) => {
+    const res = await fetch(`${BIN_URL}`, {
+      method: 'GET',
+      headers: { "X-Master-Key": API_KEY }
+    });
+    const { record } = await res.json();
+    set({ portfolios: record.portfolios || [] });
     set((state) => ({ portfolios: [...state.portfolios, data] }));
     await get().saveAllPortfolios();
   },
 
   updatePortfolio: async (data) => {
+    const res = await fetch(`${BIN_URL}`, {
+      method: 'GET',
+      headers: { "X-Master-Key": API_KEY }
+    });
+    const { record } = await res.json();
+    set({ portfolios: record.portfolios || [] });
     set((state) => ({
       portfolios: state.portfolios.map((p) =>
         p.id === data.id ? data : p
@@ -60,6 +72,12 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   },
 
   removePortfolio: async (id) => {
+    const res = await fetch(`${BIN_URL}`, {
+      method: 'GET',
+      headers: { "X-Master-Key": API_KEY }
+    });
+    const { record } = await res.json();
+    set({ portfolios: record.portfolios || [] });
     set((state) => ({
       portfolios: state.portfolios.filter((p) => p.id !== id)
     }));
