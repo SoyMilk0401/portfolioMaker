@@ -5,7 +5,6 @@ import { Link } from "react-router"
 import { usePortfolioStore } from "@/stores/useportfolioStore"
 import SearchPortfolioBar from "./SearchPortfolioBar"
 import TechStackBadge from "./TechStackBadge"
-// import CreatePortfolioButton from "./CreatePortfolioButton"
 
 const PortfolioList = () => {
   const portfolios = usePortfolioStore((state) => state.portfolios)
@@ -15,17 +14,13 @@ const PortfolioList = () => {
   const filtered_portfolios = portfolios.filter((p) => {
     const searchTerm = search.toLowerCase();
 
-    // 1. 이름 또는 이메일에서 검색
     const matchesUserInfo =
       p.userInfo.name?.toLowerCase().includes(searchTerm) ||
       p.userInfo.email?.toLowerCase().includes(searchTerm);
 
     if (matchesUserInfo) return true;
 
-    // 2. 기술 스택에서 검색
     if (p.techStack) {
-      // 모든 기술 스택 배열을 하나로 합칩니다.
-      // (?? []는 techStack의 각 프로퍼티가 undefined일 경우 빈 배열로 처리하여 오류를 방지합니다)
       const allTechs = [
         ...(p.techStack.language ?? []),
         ...(p.techStack.frontend ?? []),
@@ -33,7 +28,6 @@ const PortfolioList = () => {
         ...(p.techStack.devops ?? []),
       ];
 
-      // 통합된 기술 스택 배열에 검색어가 포함된 항목이 있는지 확인합니다.
       const matchesTechStack = allTechs.some((tech) =>
         tech.toLowerCase().includes(searchTerm)
       );
@@ -41,7 +35,6 @@ const PortfolioList = () => {
       if (matchesTechStack) return true;
     }
 
-    // 3. 아무것도 일치하지 않으면 필터링에서 제외
     return false;
   });
 
@@ -58,7 +51,6 @@ const PortfolioList = () => {
       <div>
         <SearchPortfolioBar value={search} onChange={setSearch} />
         <p className="text-center text-gray-500 mt-8">작성된 포트폴리오가 없습니다.</p>
-        {/* <CreatePortfolioButton /> */}
       </div>
     )
   }
@@ -106,7 +98,6 @@ const PortfolioList = () => {
 
           </Link>
         ))}
-        {/* <CreatePortfolioButton /> */}
       </div>
     </div>
   )
