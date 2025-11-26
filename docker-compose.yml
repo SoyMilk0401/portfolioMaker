@@ -16,6 +16,6 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      # 호스트의 db.json을 컨테이너와 동기화하여 데이터 영속성 보장
+      # 호스트의 /data를 컨테이너와 동기화
       - ./data:/data
     restart: always
