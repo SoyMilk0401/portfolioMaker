@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # React 프론트엔드
   frontend:
     build: .
     ports:
@@ -10,12 +9,9 @@ services:
       - backend
     restart: always
 
-  # JSON Server 백엔드 (데이터베이스 역할)
   backend:
     image: node:20-alpine
     working_dir: /data
-    # json-server를 즉석에서 설치하고 실행합니다.
-    # --host 0.0.0.0은 컨테이너 외부 접근을 허용하기 위함입니다.
     command: sh -c "npm install -g json-server && json-server --watch /data/db.json --port 3001 --host 0.0.0.0"
     ports:
       - "3001:3001"
