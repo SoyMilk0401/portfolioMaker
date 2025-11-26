@@ -1,14 +1,11 @@
 import { create } from "zustand";
 import type { PortfolioData } from "@/types/portfolio";
 
-const BIN_ID = "684b80a38561e97a502356d1";
-const API_KEY = "$2a$10$orPFOczfPJeiWgfIpthaFeT/Z0ZuNtpanIDrNSlzXLy1I0ec2/aA2";
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+const API_URL = "http://localhost:3001/portfolios";
 
 interface PortfolioState {
   portfolios: PortfolioData[];
   loadAllPortfolios: () => Promise<void>;
-  saveAllPortfolios: () => Promise<void>;
   getPortfolio: (id : string) => PortfolioData | undefined;
   addPortfolio: (data: PortfolioData) => Promise<void>;
   updatePortfolio: (data: PortfolioData) => Promise<void>;
@@ -21,24 +18,15 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   portfolios: [],
 
   loadAllPortfolios: async () => {
-    const res = await fetch(`${BIN_URL}`, {
-      method: 'GET',
-      headers: { "X-Master-Key": API_KEY }
-    });
-    const { record } = await res.json();
-    set({ portfolios: record.portfolios || [] });
-  },
-
-  saveAllPortfolios: async () => {
-    const portfolios = get().portfolios;
-    await fetch(BIN_URL, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Master-Key": API_KEY
-      },
-      body: JSON.stringify({ portfolios })
-    });
+    try {
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error("Failed to fetch");
+      const data = await res.json();
+      set({ portfolios: data });
+    } catch (error) {
+      console.error(error);
+      set({ portfolios: [] });
+    }
   },
 
   getPortfolio: (id) => {
@@ -46,42 +34,58 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   },
 
   addPortfolio: async (data) => {
-    const res = await fetch(`${BIN_URL}`, {
-      method: 'GET',
-      headers: { "X-Master-Key": API_KEY }
-    });
-    const { record } = await res.json();
-    set({ portfolios: record.portfolios || [] });
-    set((state) => ({ portfolios: [...state.portfolios, data] }));
-    await get().saveAllPortfolios();
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to add");
+      
+      const newPortfolio = await res.json();
+      
+      set((state) => ({ 
+        portfolios: [...state.portfolios, newPortfolio] 
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   updatePortfolio: async (data) => {
-    const res = await fetch(`${BIN_URL}`, {
-      method: 'GET',
-      headers: { "X-Master-Key": API_KEY }
-    });
-    const { record } = await res.json();
-    set({ portfolios: record.portfolios || [] });
-    set((state) => ({
-      portfolios: state.portfolios.map((p) =>
-        p.id === data.id ? data : p
-      )
-    }));
-    await get().saveAllPortfolios();
+    try {
+      const res = await fetch(`${API_URL}/${data.id}`, {
+        method: "PUT", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to update");
+      
+      const updatedPortfolio = await res.json();
+
+      set((state) => ({
+        portfolios: state.portfolios.map((p) =>
+          p.id === data.id ? updatedPortfolio : p
+        )
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   removePortfolio: async (id) => {
-    const res = await fetch(`${BIN_URL}`, {
-      method: 'GET',
-      headers: { "X-Master-Key": API_KEY }
-    });
-    const { record } = await res.json();
-    set({ portfolios: record.portfolios || [] });
-    set((state) => ({
-      portfolios: state.portfolios.filter((p) => p.id !== id)
-    }));
-    await get().saveAllPortfolios();
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete");
+      
+      set((state) => ({
+        portfolios: state.portfolios.filter((p) => p.id !== id)
+      }));
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   loading: false,
