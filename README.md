@@ -2,6 +2,9 @@
 
 나만의 포트폴리오를 쉽고 빠르게 만들고, 관리할 수 있는 웹 애플리케이션입니다.
 
+## 스크린샷
+![캡처](https://github.com/SoyMilk0401/portfolioMaker/blob/main/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7/mainPage.png)
+
 ## 주요 기능
 
 - 개발자 정보, 기술 스택, 프로젝트, 개발자 관련 링크 등 포트폴리오 항목 관리
