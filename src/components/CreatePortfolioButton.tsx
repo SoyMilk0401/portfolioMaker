@@ -1,12 +1,10 @@
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function CreatePortfolioButton() {
   const navigate = useNavigate();
   const handleCreate = () => {
-    const newId = uuidv4();
-    navigate(`/edit/${newId}`);
+    navigate(`/edit`);
   };
   return (
     <Card className="hover:shadow-lg transition-shadow border-2 border-dashed border-gray-300 cursor-pointer h-[180px]">
