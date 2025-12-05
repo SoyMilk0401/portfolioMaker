@@ -5,13 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 const BASE_URL = "http://localhost:8080/api/auth";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
+  const { login } = useAuthStore();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -23,8 +24,8 @@ export default function LoginPage() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "로그인 실패");
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.message || "로그인에 실패했습니다.");
       }
 
       const result = await res.json();
@@ -32,14 +33,18 @@ export default function LoginPage() {
       
       toast.success("로그인되었습니다.");
       navigate("/");
+
     } catch (error: any) {
-      toast.error(error.message);
+      console.error(error);
+      toast.error(error.message || "알 수 없는 오류가 발생했습니다.");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
-      <Card className="w-full max-w-md">
+      <Toaster position="top-center" richColors />
+      
+      <Card className="w-full max-w-md" data-aos="fade-up" data-aos-duration="800">
         <CardHeader>
           <CardTitle>로그인</CardTitle>
           <CardDescription>계정에 로그인하여 포트폴리오를 관리하세요.</CardDescription>

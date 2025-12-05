@@ -33,7 +33,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] px-4">
+    <div className="flex justify-center items-center min-h-[80vh] px-4" data-aos="fade-up" data-aos-duration="800">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>회원가입</CardTitle>
