@@ -21,7 +21,7 @@ export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
             <h2 className="text-2xl font-bold text-gray-900">{userinfo.name}</h2>
             {userinfo.githubUsername && (
                 <p className="text-sm text-gray-500 font-medium flex items-center justify-center gap-1 mt-1">
-                    <FaGithub size={14} className="mt-0.5" />
+                    <FaGithub size={14} className="" />
                     @{userinfo.githubUsername}
                 </p>
             )}
