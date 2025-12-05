@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { usePortfolioStore } from "@/stores/useportfolioStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import type { PortfolioData } from "@/types/portfolio";
 import {
   Carousel,
@@ -13,6 +14,7 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Description from "@/components/form/Description";
 import UserInfo from "@/components/form/UserInfo";
 import TechStack from "@/components/form/TechStack";
@@ -32,6 +34,7 @@ export default function PortfolioEdit() {
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
   const updatePortfolio = usePortfolioStore((store) => store.updatePortfolio);
   const removePortfolio = usePortfolioStore((store) => store.removePortfolio);
+  const { username: currentUsername } = useAuthStore();
   
   const portfolio = isEditMode && id ? getPortfolio(id) : undefined;
   
@@ -39,6 +42,31 @@ export default function PortfolioEdit() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   usePageTitle(isEditMode ? '포트폴리오 수정' : '포트폴리오 생성');
+
+  if (isEditMode && portfolio) {
+    if (portfolio.username !== currentUsername) {
+      return (
+        <div className="min-h-screen flex justify-center bg-white px-4 pt-20">
+          <div className="w-full max-w-xl space-y-4">
+            <Alert variant="default">
+              <AlertTitle>권한 없음</AlertTitle>
+              <AlertDescription>
+                이 포트폴리오를 수정할 권한이 없습니다.<br/>
+                작성자만 수정할 수 있습니다.
+              </AlertDescription>
+            </Alert>
+            <Button 
+              className="w-full" 
+              variant="outline"
+              onClick={() => navigate(-1)}
+            >
+              뒤로가기
+            </Button>
+          </div>
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     if (!api) return;
@@ -129,19 +157,37 @@ export default function PortfolioEdit() {
     }
   };
 
-  const onError = () => {
+  const onError = (errors: FieldErrors<PortfolioData>) => {
     toast.error("필수 항목을 모두 입력해주세요.");
+
+    if (errors.description) {
+      api?.scrollTo(0);
+      return;
+    }
+    if (errors.userInfo) {
+      api?.scrollTo(1);
+      return;
+    }
+    if (errors.techStack) {
+      api?.scrollTo(2);
+      return;
+    }
+    if (errors.relatedLinks) {
+      api?.scrollTo(3);
+      return;
+    }
+    if (errors.projects) {
+      api?.scrollTo(4);
+      return;
+    }
   };
 
   const onDelete = async () => {
     if (!isEditMode || !id) return;
 
     await removePortfolio(id);
-        toast.success("삭제되었습니다.");
-        navigate("/");
-  }
-
-  if (isEditMode && !portfolio) {
+    toast.success("삭제되었습니다.");
+    navigate("/");
   }
 
   const buttonClassName = "text-black size-8 rounded-full bg-background border border-input shadow-sm flex items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none"
