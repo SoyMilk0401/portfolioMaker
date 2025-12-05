@@ -19,7 +19,7 @@ const Header = () => {
           PortfolioMaker
         </Link>
         {isLoggedIn && username && (
-          <span className="text-sm text-gray-600 flex items-center gap-1 shrink-0 mt-1">
+          <span className="text-sm text-gray-600 flex items-center gap-1 shrink-0 mt-0.5">
             <span className="font-bold text-gray-800">{username}</span>님 환영합니다
           </span>
         )}

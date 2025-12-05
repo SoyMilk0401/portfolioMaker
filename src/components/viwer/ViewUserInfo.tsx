@@ -1,5 +1,5 @@
 import type { UserInfo } from "@/types/portfolio";
-import { FaCalendar, FaPhoneAlt } from "react-icons/fa";
+import { FaCalendar, FaPhoneAlt, FaGithub } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,7 +20,10 @@ export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{userinfo.name}</h2>
             {userinfo.githubUsername && (
-                <p className="text-sm text-gray-500 font-medium">@{userinfo.githubUsername}</p>
+                <p className="text-sm text-gray-500 font-medium flex items-center justify-center gap-1 mt-1">
+                    <FaGithub size={14} className="mt-0.5" />
+                    @{userinfo.githubUsername}
+                </p>
             )}
           </div>
         </div>
