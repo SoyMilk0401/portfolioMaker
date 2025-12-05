@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 const BASE_URL = "http://localhost:8080/api/auth";
@@ -21,7 +22,7 @@ export default function SignupPage() {
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
+        const errorData = await res.json().catch(() => ({}));
         throw new Error(errorData.message || "회원가입 실패");
       }
 
@@ -33,8 +34,10 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] px-4" data-aos="fade-up" data-aos-duration="800">
-      <Card className="w-full max-w-md">
+    <div className="flex justify-center items-center min-h-[80vh] px-4">
+      <Toaster position="top-center" richColors />
+
+      <Card className="w-full max-w-md" data-aos="fade-up" data-aos-duration="800">
         <CardHeader>
           <CardTitle>회원가입</CardTitle>
           <CardDescription>PortfolioMaker의 회원이 되어보세요.</CardDescription>

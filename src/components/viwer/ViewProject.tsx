@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -63,6 +64,9 @@ export default function ViewProject({ project }: { project: Project[] }) {
                     <DialogContent className="max-w-7xl w-full max-h-[90vh] overflow-auto">
                       <DialogHeader>
                         <DialogTitle>{project.title}</DialogTitle>
+                        <DialogDescription className="sr-only">
+                          {project.title} 프로젝트의 시연 영상입니다.
+                        </DialogDescription>
                       </DialogHeader>
                       {youtubeVideoId?.id ? (
                         <div className="relative pt-[56.25%] w-full">
