@@ -5,51 +5,43 @@ import { FaServer } from "react-icons/fa6";
 
 export default function ViewTechStack({ techstack }: { techstack: TechStack }) {
   return (
-    <section className="w-full px-4 py-12 bg-white" data-aos="fade-up">
-      <div className="max-w-5xl mx-auto text-center mb-12">
-        <h2 className="text-4xl font-bold">Tech Stack</h2>
-        <p className="text-gray-500 text-sm mt-2">사용 기술을 분야별로 정리했습니다.</p>
+    <div className="w-full max-w-5xl mx-auto" data-aos="fade-up">
+      <div className="text-center mb-16">
+        <h2 className="text-4xl font-bold tracking-tight text-gray-900">Tech Stack</h2>
+        <p className="text-gray-500 mt-3 text-lg">사용 기술을 분야별로 정리했습니다.</p>
       </div>
 
-      <Card className="max-w-5xl mx-auto p-6 shadow">
-        <CardContent className="space-y-6">
-          <StackItem icon={<FaLaptopCode size={30} />} label="Language" items={techstack.language} />
-          <StackItem icon={<FaHtml5 size={30} />} label="Frontend" items={techstack.frontend} />
-          <StackItem icon={<FaServer size={30} />} label="Backend" items={techstack.backend} />
-          <StackItem icon={<FaCloud size={30} />} label="DevOps" items={techstack.devops} />
+      <Card className="p-8 shadow-sm border-gray-200">
+        <CardContent className="space-y-8">
+          <StackItem icon={<FaLaptopCode size={28} />} label="Language" items={techstack.language} />
+          <StackItem icon={<FaHtml5 size={28} />} label="Frontend" items={techstack.frontend} />
+          <StackItem icon={<FaServer size={28} />} label="Backend" items={techstack.backend} />
+          <StackItem icon={<FaCloud size={28} />} label="DevOps" items={techstack.devops} />
         </CardContent>
       </Card>
-    </section>
+    </div>
   );
 }
 
-function StackItem({
-  icon,
-  label,
-  items,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  items: string[];
-}) {
+function StackItem({ icon, label, items }: { icon: React.ReactNode; label: string; items: string[] }) {
   return (
-    <div className="flex items-start gap-4">
-      <div className="flex items-center min-w-[120px] text-blue-600 gap-4">
-        {icon}
-        <span className="font-semibold text-base">{label}</span>
+    <div className="flex flex-col sm:flex-row sm:items-start gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+      <div className="flex items-center min-w-[140px] text-slate-700 gap-3">
+        <span className="text-blue-600">{icon}</span>
+        <span className="font-semibold text-lg">{label}</span>
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2.5 flex-1">
         {items.length > 0 ? (
-          items.map((item) => (
+          items.map((item, index) => (
             <span
-              key={item}
-              className="bg-gray-100 text-sm text-gray-800 px-3 py-1 rounded-full"
+              key={`${item}-${index}`}
+              className="bg-slate-100 text-slate-700 font-medium px-3 py-1.5 rounded-md text-sm transition-colors hover:bg-slate-200"
             >
               {item}
             </span>
           ))
         ) : (
-          <span className="text-gray-400 text-sm">-</span>
+          <span className="text-gray-400 text-sm py-1.5">-</span>
         )}
       </div>
     </div>

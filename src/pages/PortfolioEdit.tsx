@@ -195,7 +195,7 @@ export default function PortfolioEdit() {
   return (
     <div className="min-h-screen flex justify-center bg-white px-4 pt-15 pb-20">
       <Toaster position="top-center" richColors/>
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl" data-aos="fade-up" data-aos-duration="800">
         <form onSubmit={handleSubmit(onSubmit, onError)} className="w-full max-w-xl">
           <div className="flex items-center justify-between gap-2 mb-3 px-4">
             <Button type="button" className={buttonClassName} onClick={goToPrev}>
