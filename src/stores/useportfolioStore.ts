@@ -6,7 +6,9 @@ const BASE_URL = "http://localhost:8080/api/portfolios";
 
 interface PortfolioState {
   portfolios: PortfolioData[];
+  myPortfolios: PortfolioData[];
   loadAllPortfolios: () => Promise<void>;
+  loadMyPortfolios: () => Promise<void>;
   getPortfolio: (id: string) => PortfolioData | undefined;
   addPortfolio: (data: PortfolioData) => Promise<string | number>;
   updatePortfolio: (data: PortfolioData) => Promise<void>;
@@ -17,10 +19,10 @@ interface PortfolioState {
 
 export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   portfolios: [],
+  myPortfolios: [],
   loading: false,
 
   setLoading: (loading: boolean) => set({ loading }),
-
 
   loadAllPortfolios: async () => {
     try {
@@ -34,11 +36,29 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
     }
   },
 
+  loadMyPortfolios: async () => {
+    const token = useAuthStore.getState().token;
+    if (!token) return;
 
-  getPortfolio: (id) => {
-    return get().portfolios.find((p) => String(p.id) === id);
+    try {
+      const res = await fetch(`${BASE_URL}/my`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (!res.ok) throw new Error("내 포트폴리오 로딩 실패");
+      const data = await res.json();
+      set({ myPortfolios: data });
+    } catch (error) {
+      console.error(error);
+      set({ myPortfolios: [] });
+    }
   },
 
+  getPortfolio: (id) => {
+    return get().portfolios.find((p) => String(p.id) === id) || 
+           get().myPortfolios.find((p) => String(p.id) === id);
+  },
 
   addPortfolio: async (data) => {
     const token = useAuthStore.getState().token;
@@ -57,9 +77,9 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
     
     const newId = await res.json(); 
     await get().loadAllPortfolios();
+    await get().loadMyPortfolios();
     return newId;
   },
-
 
   updatePortfolio: async (data) => {
     const token = useAuthStore.getState().token;
@@ -76,8 +96,8 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
 
     if (!res.ok) throw new Error("수정 실패");
     await get().loadAllPortfolios();
+    await get().loadMyPortfolios();
   },
-
 
   removePortfolio: async (id) => {
     const token = useAuthStore.getState().token;
@@ -92,5 +112,6 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
 
     if (!res.ok) throw new Error("삭제 실패");
     await get().loadAllPortfolios();
+    await get().loadMyPortfolios();
   },
 }));
