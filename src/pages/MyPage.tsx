@@ -45,7 +45,6 @@ export default function MyPage() {
     fetchData();
   }, [token, navigate, loadMyPortfolios, setLoading]);
 
-  // 회원 탈퇴 처리
   const handleLeave = async () => {
     if (!password) {
       toast.error("비밀번호를 입력해주세요.");
