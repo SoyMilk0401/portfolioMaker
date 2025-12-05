@@ -56,7 +56,7 @@ const PortfolioList = () => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center mb-10">
       <div className="w-full max-w-2xl mx-auto px-4 mb-6 flex justify-center" data-aos="fade-up" data-aos-delay="100">
         <SearchPortfolioBar value={search} onChange={setSearch} />
       </div>
