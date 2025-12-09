@@ -16,51 +16,44 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 type Props = {
   register: any;
   errors: any;
-  onDelete: () => void;
+  onDelete?: () => void;
 };
 
-export default function FormSubmit({ register, errors, onDelete }: Props) {
-
-  function handleRemove() {
-    onDelete();
-  }
+export default function FormSubmit({ onDelete }: Props) {
 
   return(
     <Card>
       <CardHeader>
-        <CardTitle>작성완료</CardTitle>
-        <CardDescription>비밀번호를 입력하고 포트폴리오 작성을 완료하세요</CardDescription>
+        <CardTitle>작성 완료</CardTitle>
+        <CardDescription>모든 내용을 확인하셨다면 저장 버튼을 눌러주세요.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-6">
-          <div className="grid gap-2">
-            <Label htmlFor="password">포트폴리오 비밀번호</Label>
-            <Input id="password" {...register("password", { required: '비밀번호는 필수입니다' })} />
-            {errors.password && <p className="text-red-500 text-xs">{errors.password.message}</p>}
-          </div>
-          <div className="flex justify-end gap-3">
-            <AlertDialog>
-              <AlertDialogTrigger asChild><Button type="button">삭제</Button></AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>포트폴리오 삭제</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    이 작업은 되돌릴 수 없습니다
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>취소</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleRemove}>삭제</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+          <div className="flex justify-end gap-3 pt-4">
+            {onDelete && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type="button" variant="destructive">삭제</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>포트폴리오 삭제</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>취소</AlertDialogCancel>
+                    <AlertDialogAction onClick={onDelete} className="bg-red-600 hover:bg-red-700">삭제</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
             <Button type="submit">저장</Button>
           </div>
         </div>

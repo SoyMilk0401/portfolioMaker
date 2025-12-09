@@ -1,21 +1,17 @@
-import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router';
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function CreatePortfolioButton() {
   const navigate = useNavigate();
+  
   const handleCreate = () => {
-    const newId = uuidv4();
-    navigate(`/edit/${newId}`);
+    navigate(`/edit`);
   };
+
   return (
-    <Card className="hover:shadow-lg transition-shadow border-2 border-dashed border-gray-300 cursor-pointer h-[180px]">
-      <CardContent className="flex flex-col items-center justify-center py-8">
-        <button
-          onClick={handleCreate}
-          className="flex flex-col items-center gap-2 focus:outline-none"
-        >
-          {/* + 아이콘 (SVG) */}
+    <Card className="hover:shadow-lg transition-shadow border-2 border-dashed border-gray-300 cursor-pointer h-[200px]">
+      <CardContent className="flex flex-col items-center justify-center h-full py-8" onClick={handleCreate}>
+        <button className="flex flex-col items-center gap-2 focus:outline-none w-full h-full justify-center">
           <svg width="36" height="36" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400 mb-2">
             <circle cx="18" cy="18" r="17" stroke="currentColor" strokeDasharray="4 2" fill="none"/>
             <line x1="18" y1="10" x2="18" y2="26" stroke="currentColor" />

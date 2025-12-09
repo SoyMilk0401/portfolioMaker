@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { usePortfolioStore } from "@/stores/useportfolioStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 import type { PortfolioData } from "@/types/portfolio";
 import {
   Carousel,
@@ -10,10 +11,10 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel"
 import { Progress } from "@/components/ui/progress"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Description from "@/components/form/Description";
 import UserInfo from "@/components/form/UserInfo";
 import TechStack from "@/components/form/TechStack";
@@ -23,40 +24,53 @@ import Project from "@/components/form/Project";
 import FormSubmit from "@/components/form/FormSubmit";
 import usePageTitle from "@/components/hooks/usePageTitle";
 
-// import { DevTool } from '@hookform/devtools'
-
 export default function PortfolioEdit() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  if (!id?.trim()) {
-    return (
-      <div className="p-6 max-w-xl mx-auto space-y-4">
-        <Alert variant="default">
-          <AlertTitle>잘못된 접근</AlertTitle>
-          <AlertDescription>
-            유효하지 않은 포트폴리오 ID입니다.
-          </AlertDescription>
-        </Alert>
-      </div>
-    );
-  }
-  
+  const isEditMode = Boolean(id);
+
   const addPortfolio = usePortfolioStore((store) => store.addPortfolio);
   const getPortfolio = usePortfolioStore((store) => store.getPortfolio);
   const updatePortfolio = usePortfolioStore((store) => store.updatePortfolio);
   const removePortfolio = usePortfolioStore((store) => store.removePortfolio);
-  const portfolio = getPortfolio(id);
+  const { username: currentUsername } = useAuthStore();
+  
+  const portfolio = isEditMode && id ? getPortfolio(id) : undefined;
+  
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  usePageTitle('PortfolioEdit')
+  usePageTitle(isEditMode ? '포트폴리오 수정' : '포트폴리오 생성');
+
+  if (isEditMode && portfolio) {
+    if (portfolio.username !== currentUsername) {
+      return (
+        <div className="min-h-screen flex justify-center bg-white px-4 pt-20">
+          <div className="w-full max-w-xl space-y-4">
+            <Alert variant="default">
+              <AlertTitle>권한 없음</AlertTitle>
+              <AlertDescription>
+                이 포트폴리오를 수정할 권한이 없습니다.<br/>
+                작성자만 수정할 수 있습니다.
+              </AlertDescription>
+            </Alert>
+            <Button 
+              className="w-full" 
+              variant="outline"
+              onClick={() => navigate(-1)}
+            >
+              뒤로가기
+            </Button>
+          </div>
+        </div>
+      );
+    }
+  }
 
   useEffect(() => {
     if (!api) return;
-    // 현재 선택된 슬라이드 인덱스 추적
     setSelectedIndex(api.selectedScrollSnap());
-    // 슬라이드 변경 이벤트 리스닝
     api.on("select", () => setSelectedIndex(api.selectedScrollSnap()));
   }, [api]);
 
@@ -70,87 +84,117 @@ export default function PortfolioEdit() {
 
   const form = useForm<PortfolioData>({
     defaultValues: {
-      id: id,
+      id: id || "",
       password: "",
       description: {
-        title: portfolio?.description?.title || "",
-        detail: portfolio?.description?.detail || "",
+        title: "",
+        detail: "",
       },
       userInfo: {
-        name: portfolio?.userInfo?.name || "",
-        birthdate: portfolio?.userInfo?.birthdate || "",
-        email: portfolio?.userInfo?.email || "",
-        phone: portfolio?.userInfo?.phone || "",
-        education: portfolio?.userInfo?.education || "",
-        githubUsername: portfolio?.userInfo?.githubUsername || "",
-        photo: portfolio?.userInfo?.photo || "",
+        name: "",
+        birthdate: "",
+        email: "",
+        phone: "",
+        education: "",
+        githubUsername: "",
+        photo: "",
       },
       techStack: {
-        language: portfolio?.techStack?.language || [],
-        frontend: portfolio?.techStack?.frontend || [],
-        backend: portfolio?.techStack?.backend || [],
-        devops: portfolio?.techStack?.devops || [],
+        language: [],
+        frontend: [],
+        backend: [],
+        devops: [],
       },
-      relatedLinks: portfolio?.relatedLinks || [],
-      projects: portfolio?.projects || [],
+      relatedLinks: [],
+      projects: [],
     }
   });
  
-  const { register, handleSubmit, watch, formState: { errors }, control } = form;
+  const { register, handleSubmit, reset, formState: { errors }, control } = form;
 
-  // useEffect(() => {
-  //   reset({...portfolio, password:""})
-  // }, [portfolio, form])
+  useEffect(() => {
+    if (isEditMode && portfolio) {
+      reset({
+        ...portfolio,
+        password: "",
+      });
+    }
+  }, [isEditMode, portfolio, reset]);
   
   async function fetchGithubAvatar(username: string | undefined): Promise<string | undefined> {
     if (!username) return undefined;
-    const res = await fetch(`https://api.github.com/users/${username}`);
-    if (!res.ok) return undefined;
-    const data = await res.json();
-    return data.avatar_url;
+    try {
+      const res = await fetch(`https://api.github.com/users/${username}`);
+      if (!res.ok) return undefined;
+      const data = await res.json();
+      return data.avatar_url;
+    } catch (e) {
+      return undefined;
+    }
   }
 
   const onSubmit = async (data: PortfolioData) => {
-    if (portfolio?.password !== data.password && portfolio?.password !== undefined) {
-      toast.error("비밀번호가 일치하지 않습니다.")
-      return 
-    }
-
-    fetchGithubAvatar(data.userInfo.githubUsername).then((avatarUrl) => {
+    if (data.userInfo.githubUsername) {
+      const avatarUrl = await fetchGithubAvatar(data.userInfo.githubUsername);
       if (avatarUrl) {
         data.userInfo.photo = avatarUrl;
       }
-    })
-
-    if (portfolio === undefined) {
-      await addPortfolio(data);
-    } else {
-      await updatePortfolio(data);
     }
 
-    navigate(`/view/${id}`);
+    try {
+      if (isEditMode && id) {
+        await updatePortfolio({ ...data, id }); 
+        toast.success("포트폴리오가 수정되었습니다.");
+        navigate(`/view/${id}`);
+      } else {
+        const newId = await addPortfolio(data); 
+        toast.success("포트폴리오가 저장되었습니다.");
+        navigate(`/view/${newId}`);
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
-  const onError = () => {
+  const onError = (errors: FieldErrors<PortfolioData>) => {
     toast.error("필수 항목을 모두 입력해주세요.");
+
+    if (errors.description) {
+      api?.scrollTo(0);
+      return;
+    }
+    if (errors.userInfo) {
+      api?.scrollTo(1);
+      return;
+    }
+    if (errors.techStack) {
+      api?.scrollTo(2);
+      return;
+    }
+    if (errors.relatedLinks) {
+      api?.scrollTo(3);
+      return;
+    }
+    if (errors.projects) {
+      api?.scrollTo(4);
+      return;
+    }
   };
 
   const onDelete = async () => {
-    const values = watch('password');
-    if (portfolio?.password !== values && portfolio?.password !== undefined) {
-      toast.error("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-      await removePortfolio(id);
+    if (!isEditMode || !id) return;
+
+    await removePortfolio(id);
+    toast.success("삭제되었습니다.");
     navigate("/");
   }
 
   const buttonClassName = "text-black size-8 rounded-full bg-background border border-input shadow-sm flex items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:pointer-events-none"
 
   return (
-    <div className="min-h-screen flex justify-center bg-white px-4 pt-15">
+    <div className="min-h-screen flex justify-center bg-white px-4 pt-15 pb-20">
       <Toaster position="top-center" richColors/>
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl" data-aos="fade-up" data-aos-duration="800">
         <form onSubmit={handleSubmit(onSubmit, onError)} className="w-full max-w-xl">
           <div className="flex items-center justify-between gap-2 mb-3 px-4">
             <Button type="button" className={buttonClassName} onClick={goToPrev}>
@@ -170,11 +214,16 @@ export default function PortfolioEdit() {
               <CarouselItem><TechStack register={register} errors={errors} control={control} /></CarouselItem>
               <CarouselItem><RelatedLink register={register} errors={errors} control={control} /></CarouselItem>
               <CarouselItem><Project register={register} errors={errors} control={control} /></CarouselItem>
-              <CarouselItem><FormSubmit register={register} errors={errors} onDelete={onDelete} /></CarouselItem>
+              <CarouselItem>
+                <FormSubmit 
+                  register={register} 
+                  errors={errors} 
+                  onDelete={isEditMode ? onDelete : () => {}}
+                />
+              </CarouselItem>
             </CarouselContent>
           </Carousel>
         </form>
-        {/* <DevTool control={control} /> */}
       </div>
     </div>
   );

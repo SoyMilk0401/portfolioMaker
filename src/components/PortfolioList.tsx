@@ -48,7 +48,7 @@ const PortfolioList = () => {
 
   if (!loading && (!portfolios || portfolios.length === 0)) {
     return (
-      <div>
+      <div className="w-full px-4 flex flex-col items-center">
         <SearchPortfolioBar value={search} onChange={setSearch} />
         <p className="text-center text-gray-500 mt-8">작성된 포트폴리오가 없습니다.</p>
       </div>
@@ -56,11 +56,11 @@ const PortfolioList = () => {
   }
 
   return (
-    <div>
-      <div className="w-full max-w-2xl mx-auto px-4 mb-6" data-aos="fade-up" data-aos-delay="100">
+    <div className="w-full flex flex-col items-center mb-10">
+      <div className="w-full max-w-2xl mx-auto px-4 mb-6 flex justify-center" data-aos="fade-up" data-aos-delay="100">
         <SearchPortfolioBar value={search} onChange={setSearch} />
       </div>
-      <div className="grid grid-cols-3 gap-6 mt-4 w-full max-w-5xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 w-full max-w-5xl px-4">
         {filtered_portfolios.map((p) => (
           <Link
             key={p.id}
@@ -74,7 +74,6 @@ const PortfolioList = () => {
               data-aos-delay="150"
             >
               <CardContent className="flex items-center gap-4 p-6 h-full">
-                {/* 왼쪽: 프로필 사진 */}
                 <div className="flex-shrink-0">
                   <img
                     src={p.userInfo.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(p.userInfo.name)}`}
@@ -83,7 +82,6 @@ const PortfolioList = () => {
                   />
                 </div>
 
-                {/* 오른쪽: 텍스트 */}
                 <div className="flex flex-col flex-1 min-w-0">
                   <div className="font-semibold text-xl text-gray-800 truncate">
                     {p.userInfo.name}
