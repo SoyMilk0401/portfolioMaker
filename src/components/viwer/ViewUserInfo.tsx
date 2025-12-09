@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export default function ViewUserInfo({ userinfo }: { userinfo: UserInfo }) {
   return (
     <section className="w-full px-4" data-aos="fade-up">
-      <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-10">
+      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
         
         <div className="flex flex-col items-center justify-center shrink-0 text-center space-y-4">
           <Avatar className="w-40 h-40 border-4 border-white shadow-xl bg-white">

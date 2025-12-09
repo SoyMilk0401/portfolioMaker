@@ -49,7 +49,7 @@ export default function ViewProject({ project }: { project: Project[] }) {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto" data-aos="fade-up">
+    <div className="w-full max-w-6xl mx-auto" data-aos="fade-up">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold tracking-tight text-gray-900">PROJECTS</h2>
         <p className="text-gray-500 mt-3 text-lg">주요 프로젝트 경험입니다.</p>

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
 const AUTH_URL = "http://localhost:8080/api/auth";
@@ -77,9 +78,9 @@ export default function MyPage() {
 
   return (
     <div className="container mx-auto px-4 py-12 max-w-5xl">
+      <Toaster position="top-center" richColors />
       <h1 className="text-3xl font-bold mb-8">마이페이지</h1>
 
-      {/* 내 포트폴리오 섹션 */}
       <section className="mb-12" data-aos="fade-up" data-aos-delay="100">
         <h2 className="text-xl font-semibold mb-4">내가 작성한 포트폴리오</h2>
         {myPortfolios.length === 0 && !loading ? (
@@ -118,7 +119,6 @@ export default function MyPage() {
         )}
       </section>
 
-      {/* 계정 관리 섹션 */}
       <section className="border-t pt-8" data-aos="fade-up" data-aos-delay="200">
         <h2 className="text-xl font-semibold mb-4 text-red-600">계정 관리</h2>
         <div className="flex items-center justify-between bg-red-50 p-4 rounded-lg border border-red-100">
@@ -132,7 +132,6 @@ export default function MyPage() {
         </div>
       </section>
 
-      {/* 탈퇴 확인 다이얼로그 */}
       <Dialog open={isLeaveDialogOpen} onOpenChange={setIsLeaveDialogOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
