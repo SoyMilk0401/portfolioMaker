@@ -151,9 +151,8 @@ export default function PortfolioEdit() {
         toast.success("포트폴리오가 저장되었습니다.");
         navigate(`/view/${newId}`);
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("저장 중 오류가 발생했습니다.");
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

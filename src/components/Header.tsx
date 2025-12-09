@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 const Header = () => {
   const navigate = useNavigate();
   
+  // 로그인 상태와 유저 정보, 로그아웃 함수 가져오기
   const { isLoggedIn, username, logout } = useAuthStore();
 
   const handleLogout = () => {
@@ -18,6 +19,7 @@ const Header = () => {
         <Link to="/" className="text-xl font-bold hover:text-slate-600 transition shrink-0">
           PortfolioMaker
         </Link>
+        {/* 로그인 상태이고 유저명이 있을 때 환영 메시지 표시 */}
         {isLoggedIn && username && (
           <span className="text-sm text-gray-600 flex items-center gap-1 shrink-0 mt-0.5">
             <span className="font-bold text-gray-800">{username}</span>님 환영합니다
@@ -26,7 +28,8 @@ const Header = () => {
       </div>
 
       <nav className="flex items-center gap-2 md:gap-4 shrink-0">
-        {isLoggedIn && username ? (
+        {/* 로그인 여부에 따른 버튼 표시 분기 */}
+        {isLoggedIn ? (
           <>
             <Button 
               variant="outline" 
