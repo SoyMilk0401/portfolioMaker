@@ -2,7 +2,7 @@ import { create } from "zustand";
 import type { PortfolioData } from "@/types/portfolio";
 import { useAuthStore } from "./useAuthStore";
 
-const BASE_URL = "http://localhost:8080/api/portfolios";
+const BASE_URL = "https://hunpu.asuscomm.com:4512/api/portfolios";
 
 interface PortfolioState {
   portfolios: PortfolioData[];
