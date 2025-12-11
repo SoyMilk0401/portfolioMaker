@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
-const BASE_URL = "http://localhost:8080/api/auth";
+const BASE_URL = "https://hunpu.asuscomm.com:4512/api/auth";
 
 export default function LoginPage() {
   const navigate = useNavigate();
