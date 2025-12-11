@@ -32,7 +32,7 @@ import ViewProject from "@/components/viwer/ViewProject";
 import usePageTitle from "@/components/hooks/usePageTitle";
 import { ChevronLeft, Edit2, Bot } from "lucide-react";
 
-const API_BASE_URL = "https://hunpu.asuscomm.com:4512/api";
+const API_BASE_URL = "https://hunpu.asuscomm.com/api";
 
 export default function PortfolioView() {
   const { id } = useParams();

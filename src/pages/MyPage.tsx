@@ -19,7 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 
-const AUTH_URL = "https://hunpu.asuscomm.com:4512/api/auth";
+const AUTH_URL = "https://hunpu.asuscomm.com/api/auth";
 
 export default function MyPage() {
   const navigate = useNavigate();
